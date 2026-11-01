@@ -280,6 +280,34 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 }
 .composer-caption { text-align: center; font-size: 11px; color: var(--text-2); margin-top: var(--s2); }
 
+/* Follow-up pills */
+[data-testid="stPills"] { margin-top: var(--s3); }
+[data-testid="stPills"] button,
+[data-testid="stPills"] [role="radio"] {
+  border: 1px solid var(--border) !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  height: auto !important;
+}
+[data-testid="stPills"] button:hover,
+[data-testid="stPills"] button:focus-visible,
+[data-testid="stPills"] [role="radio"]:hover {
+  border-color: var(--brand) !important;
+  color: var(--brand) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+[data-testid="stPills"] button[aria-checked="true"],
+[data-testid="stPills"] [role="radio"][aria-checked="true"] {
+  border-color: var(--brand) !important;
+  background: var(--surface) !important;
+  color: var(--brand) !important;
+}
+
 /* Typing indicator */
 .typing-indicator { display: inline-flex; align-items: center; gap: var(--s2); padding: var(--s4) var(--s5); }
 .typing-indicator span { width: 6px; height: 6px; border-radius: 50%; background: var(--text-2); animation: typing 1.2s infinite ease-in-out; }

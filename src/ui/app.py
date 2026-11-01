@@ -72,7 +72,23 @@ _STARTERS = ["Expense ratio", "Exit load", "Minimum SIP", "Fund manager"]
 
 st.session_state.setdefault("messages", [])
 st.session_state.setdefault("pending_prompt", "")
+st.session_state.setdefault("pending_question", "")
 st.session_state.setdefault("started", False)
+
+
+def handle_followup(turn_index: int) -> None:
+    key = f"followup_{turn_index}"
+    selected = st.session_state.get(key)
+    if not selected:
+        return
+    msg = st.session_state.messages[turn_index] if turn_index < len(st.session_state.messages) else None
+    fund = "HDFC Large Cap Fund Direct Growth"
+    if msg and msg.get("fund"):
+        fund = msg["fund"]
+    topic = CHIP_TOPIC.get(selected, selected.lower())
+    st.session_state.pending_question = f"What is the {topic} of {fund}?"
+    # reset selection so the same chip can be clicked again
+    st.session_state[key] = None
 
 
 def status_for(route: str) -> tuple[str, str]:
@@ -188,26 +204,49 @@ def render_assistant(response: dict) -> str:
             )
         source_html += '    </div></details></div>'
 
-    chips_html = ""
-    if route == "answer":
-        scheme = SCHEME_BY_ID.get(response.get("scheme", ""))
-        chips = FOLLOWUPS.get(intent, [])[:3]
-        if scheme and chips:
-            chips_html = '<div class="chip-row">' + "".join(
-                f'<button class="chip" onclick="window.location.search=\'?chip={esc(chip)}\'">{esc(chip)}</button>'
-                for chip in chips
-            ) + "</div>"
-
     status_class, status_label = status_for(route)
     avatar_html = '<div class="avatar">F</div>'
     stack_html = (
         f'<span class="status-chip {status_class}"><span class="dot"></span>{esc(status_label)}</span>'
         + card_html
         + source_html
-        + chips_html
     )
 
     return f'<div class="turn assistant">{avatar_html}<div class="assistant-stack">{stack_html}</div></div>'
+
+
+def render_followups(turn_index: int) -> None:
+    if turn_index >= len(st.session_state.messages):
+        return
+    msg = st.session_state.messages[turn_index]
+    if msg.get("role") != "assistant":
+        return
+    # only last assistant turn shows chips
+    last_assistant = None
+    for i in range(len(st.session_state.messages) - 1, -1, -1):
+        if st.session_state.messages[i].get("role") == "assistant":
+            last_assistant = i
+            break
+    if turn_index != last_assistant:
+        return
+    response = msg["response"]
+    route = response.get("route", "")
+    if route != "answer":
+        return
+    intent = response.get("intent", "other")
+    chips = FOLLOWUPS.get(intent, [])[:3]
+    if not chips:
+        return
+    key = f"followup_{turn_index}"
+    st.pills(
+        "Follow-up",
+        options=chips,
+        selection_mode="single",
+        label_visibility="collapsed",
+        key=key,
+        on_change=handle_followup,
+        args=(turn_index,),
+    )
 
 
 # ---------- header ----------
@@ -222,7 +261,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ---------- handle chip query param (starter + follow-up) ----------
+# ---------- handle chip query param (starter chips) ----------
 qp = st.query_params
 if "q" in qp:
     qval = qp["q"]
@@ -232,37 +271,44 @@ if "q" in qp:
         st.session_state.pending_prompt = qval
         st.session_state.started = True
     st.query_params.clear()
-elif "chip" in qp:
-    chip = qp["chip"]
-    if isinstance(chip, list):
-        chip = chip[0] if chip else ""
-    if chip:
-        topic = CHIP_TOPIC.get(chip)
-        if topic:
-            fund = "HDFC Large Cap Fund Direct Growth"
-            for m in reversed(st.session_state.messages):
-                if m["role"] == "assistant":
-                    ans = m["response"].get("answer", "")
-                    mm = re.search(r"of (.+?) (?:is|was|has)", ans, re.IGNORECASE)
-                    if mm:
-                        fund = mm.group(1).strip()
-                    break
-            st.session_state.pending_prompt = f"What is the {topic} of {fund}?"
-    st.query_params.clear()
 
-# ---------- empty state ----------
+# ---------- handle pending questions (starter or follow-up) ----------
+if st.session_state.pending_prompt:
+    st.session_state.pending_question = st.session_state.pending_prompt
+    st.session_state.pending_prompt = ""
+
+if st.session_state.pending_question:
+    pq = st.session_state.pending_question
+    st.session_state.pending_question = ""
+    st.session_state.started = True
+    st.session_state.has_started = True
+    st.session_state.messages.append({"role": "user", "content": pq})
+    with st.spinner("Retrieving official pages and checking the facts…"):
+        try:
+            response = answer_question(pq, config, persist=True)
+        except Exception:  # noqa: BLE001
+            st.error("The pipeline is not ready. Run the ingest steps first, then try again.")
+            st.stop()
+    scheme = SCHEME_BY_ID.get(response.get("scheme", ""))
+    st.session_state.messages.append({
+        "role": "assistant",
+        "response": response,
+        "fund": scheme.name if scheme else None,
+        "intent": response.get("intent"),
+    })
+    # reset pill selections
+    for k in list(st.session_state.keys()):
+        if k.startswith("followup_"):
+            st.session_state[k] = None
+    st.rerun()
+
+# ---------- welcome state ----------
 if not st.session_state.started and not st.session_state.messages:
     st.markdown(
-        '<div class="empty-state">'
-        '  <div class="welcome"><h2>Ask about any mutual fund</h2>'
-        '  <p>Factual answers from official fund pages, with one citation per answer.</p></div>'
-        '</div>',
+        '<div class="welcome"><h2>Ask about any mutual fund</h2>'
+        '<p>Factual answers from official fund pages, with one citation per answer.</p></div>',
         unsafe_allow_html=True,
     )
-    st.markdown('<div class="empty-composer">', unsafe_allow_html=True)
-    with st.container():
-        prompt_empty = st.chat_input("Ask about expense ratio, exit load, SIP…", key="empty_input")
-    st.markdown('</div>', unsafe_allow_html=True)
     chip_qs = {
         "Expense ratio": "What is the expense ratio of HDFC Large Cap Fund Direct Growth?",
         "Exit load": "What is the exit load of HDFC Large Cap Fund Direct Growth?",
@@ -278,31 +324,27 @@ if not st.session_state.started and not st.session_state.messages:
     st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
                 unsafe_allow_html=True)
 
-    if prompt_empty:
-        st.session_state.pending_prompt = prompt_empty
-        st.session_state.started = True
-        st.rerun()
-
 # ---------- transcript ----------
 if st.session_state.started or st.session_state.messages:
     st.markdown('<div class="thread fade-in" id="thread">', unsafe_allow_html=True)
-    for message in st.session_state.messages:
+    for idx, message in enumerate(st.session_state.messages):
         if message["role"] == "user":
             st.markdown(render_user(message["content"]), unsafe_allow_html=True)
         else:
             st.markdown(render_assistant(message["response"]), unsafe_allow_html=True)
+            render_followups(idx)
     st.markdown('<div id="thread-bottom" style="height:1px;"></div></div>', unsafe_allow_html=True)
 
 # ---------- input (pinned, only after started) ----------
 prompt = None
 if st.session_state.started:
-    prompt = st.chat_input("Ask about expense ratio, exit load, SIP…", key="main_input")
+    prompt = st.chat_input("Ask about expense ratio, exit load, SIP…")
 
 if st.session_state.pending_prompt:
     prompt = st.session_state.pending_prompt
     st.session_state.pending_prompt = ""
 
-if prompt:
+if prompt and not st.session_state.pending_question:
     st.session_state.started = True
     st.session_state.has_started = True
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -322,10 +364,22 @@ if prompt:
         st.stop()
     placeholder.empty()
     st.markdown(render_assistant(response), unsafe_allow_html=True)
-    st.session_state.messages.append({"role": "assistant", "response": response})
+    scheme = SCHEME_BY_ID.get(response.get("scheme", ""))
+    st.session_state.messages.append({
+        "role": "assistant",
+        "response": response,
+        "fund": scheme.name if scheme else None,
+        "intent": response.get("intent"),
+    })
+    render_followups(len(st.session_state.messages) - 1)
 
-# scroll to bottom
 components.html(
     "<script>var el=window.parent.document.getElementById('thread-bottom'); if(el) el.scrollIntoView({behavior:'smooth',block:'end'});</script>",
     height=0,
 )
+
+if st.session_state.started:
+    st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
+                unsafe_allow_html=True)
+else:
+    pass
