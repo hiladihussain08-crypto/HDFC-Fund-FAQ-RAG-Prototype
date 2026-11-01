@@ -125,39 +125,9 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 .welcome { text-align: center; padding: var(--s7) 0 var(--s5) 0; }
 .welcome h2 { font-size: 22px; font-weight: 600; color: var(--text); margin: 0 0 var(--s2) 0; }
 .welcome p { font-size: 15px; color: var(--text-2); margin: 0; line-height: 1.6; }
-.starter-chips {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s2);
-}
-.st-key-starter_chips [data-testid="stVerticalBlock"] {
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 8px !important;
-}
-.st-key-starter_chips [data-testid="stElementContainer"],
-.st-key-starter_chips [data-testid="stButton"],
-.st-key-starter_chips button {
-  width: auto !important;
-  flex: 0 0 auto !important;
-}
-.st-key-starter_chips button {
-  border: 1px solid var(--border) !important;
-  background: var(--surface) !important;
-  color: var(--text) !important;
-  border-radius: var(--radius-pill) !important;
-  padding: 8px 16px !important;
-  font-size: 13px !important;
-  height: auto !important;
-  font-weight: 400 !important;
-  white-space: nowrap !important;
-}
-.st-key-starter_chips button:hover, .st-key-starter_chips button:focus-visible {
-  border-color: var(--brand) !important;
-  color: var(--brand) !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
+.starter-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+.starter-chips .chip { display: inline-block; padding: 8px 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); font-size: 14px; text-decoration: none; white-space: nowrap; }
+.starter-chips .chip:hover, .starter-chips .chip:focus-visible { border-color: var(--brand); outline: none; }
 
 /* Thread */
 .thread { display: flex; flex-direction: column; gap: var(--s6); }

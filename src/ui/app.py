@@ -8,7 +8,7 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import quote_plus, urlparse
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
@@ -222,9 +222,17 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ---------- handle chip query param ----------
+# ---------- handle chip query param (starter + follow-up) ----------
 qp = st.query_params
-if "chip" in qp:
+if "q" in qp:
+    qval = qp["q"]
+    if isinstance(qval, list):
+        qval = qval[0] if qval else ""
+    if qval:
+        st.session_state.pending_prompt = qval
+        st.session_state.started = True
+    st.query_params.clear()
+elif "chip" in qp:
     chip = qp["chip"]
     if isinstance(chip, list):
         chip = chip[0] if chip else ""
@@ -255,13 +263,18 @@ if not st.session_state.started and not st.session_state.messages:
     with st.container():
         prompt_empty = st.chat_input("Ask about expense ratio, exit load, SIP…", key="empty_input")
     st.markdown('</div>', unsafe_allow_html=True)
-    with st.container(key="starter_chips"):
-        for label in _STARTERS:
-            if st.button(label, key=f"starter_{label}"):
-                topic = CHIP_TOPIC[label]
-                st.session_state.pending_prompt = f"What is the {topic} of HDFC Large Cap Fund Direct Growth?"
-                st.session_state.started = True
-                st.rerun()
+    chip_qs = {
+        "Expense ratio": "What is the expense ratio of HDFC Large Cap Fund Direct Growth?",
+        "Exit load": "What is the exit load of HDFC Large Cap Fund Direct Growth?",
+        "Minimum SIP": "What is the minimum SIP for HDFC Large Cap Fund Direct Growth?",
+        "Fund manager": "Who is the fund manager of HDFC Large Cap Fund Direct Growth?",
+    }
+    chips_html = '<div class="starter-chips">'
+    for label in _STARTERS:
+        q = quote_plus(chip_qs[label])
+        chips_html += f'<a class="chip" href="?q={q}" target="_self">{esc(label)}</a>'
+    chips_html += "</div>"
+    st.markdown(chips_html, unsafe_allow_html=True)
     st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
                 unsafe_allow_html=True)
 
