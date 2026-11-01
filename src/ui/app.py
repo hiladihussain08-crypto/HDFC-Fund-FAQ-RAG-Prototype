@@ -255,13 +255,13 @@ if not st.session_state.started and not st.session_state.messages:
     with st.container():
         prompt_empty = st.chat_input("Ask about expense ratio, exit load, SIP…", key="empty_input")
     st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('<div class="starter-chips">', unsafe_allow_html=True)
-    for label in _STARTERS:
-        st.markdown(
-            f'<button class="chip" onclick="window.location.search=\'?chip={label}\'">{esc(label)}</button>',
-            unsafe_allow_html=True,
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+    with st.container(key="starter_chips"):
+        for label in _STARTERS:
+            if st.button(label, key=f"starter_{label}"):
+                topic = CHIP_TOPIC[label]
+                st.session_state.pending_prompt = f"What is the {topic} of HDFC Large Cap Fund Direct Growth?"
+                st.session_state.started = True
+                st.rerun()
     st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
                 unsafe_allow_html=True)
 

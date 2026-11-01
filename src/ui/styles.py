@@ -81,7 +81,11 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 .block-container {
   max-width: 760px;
   margin: 0 auto;
-  padding: var(--s6) 20px 180px 20px;
+  padding: 64px 20px 180px 20px;
+  gap: 0 !important;
+}
+@media (max-width: 600px) {
+  .block-container { padding-top: 32px; }
 }
 
 /* Header bar */
@@ -123,19 +127,32 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 .welcome p { font-size: 15px; color: var(--text-2); margin: 0; line-height: 1.6; }
 .starter-chips {
   display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s2);
-  margin-top: var(--s5);
 }
-.starter-chips button {
+.st-key-starter_chips [data-testid="stVerticalBlock"] {
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+.st-key-starter_chips [data-testid="stElementContainer"],
+.st-key-starter_chips [data-testid="stButton"],
+.st-key-starter_chips button {
+  width: auto !important;
+  flex: 0 0 auto !important;
+}
+.st-key-starter_chips button {
   border: 1px solid var(--border) !important;
   background: var(--surface) !important;
   color: var(--text) !important;
   border-radius: var(--radius-pill) !important;
-  padding: var(--s2) var(--s3) !important;
+  padding: 8px 16px !important;
   font-size: 13px !important;
   height: auto !important;
   font-weight: 400 !important;
+  white-space: nowrap !important;
 }
-.starter-chips button:hover, .starter-chips button:focus-visible {
+.st-key-starter_chips button:hover, .st-key-starter_chips button:focus-visible {
   border-color: var(--brand) !important;
   color: var(--brand) !important;
   outline: none !important;
@@ -307,8 +324,12 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 details { border: 1px solid var(--border); border-radius: 8px; padding: var(--s1) var(--s2); background: var(--surface); margin: var(--s1) 0; }
 details summary { cursor: pointer; font-size: 12px; color: var(--text-2); font-weight: 500; }
 
-.empty-state { padding-top: 25vh; }
+.empty-state { padding-top: 0; }
 .empty-composer [data-testid="stChatInput"] { max-width: 640px !important; margin: 0 auto !important; }
+.empty-state .welcome { margin-bottom: var(--s2); }
+.empty-state .welcome p { margin-bottom: var(--s5); }
+.empty-composer { margin-bottom: var(--s3); }
+.starter-chips { margin-bottom: var(--s5); }
 .thread.fade-in { animation: fadeIn 200ms ease both; }
 
 @media (prefers-reduced-motion: reduce) {
