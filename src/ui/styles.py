@@ -25,6 +25,9 @@ CSS = r"""
   --err-bg: #FDECEA;
   --radius-card: 12px;
   --radius-pill: 999px;
+  --assistant-indent: 40px;
+  --brand-tint: rgba(0,166,126,0.10);
+  --on-brand: #FFFFFF;
   --s1: 4px;
   --s2: 8px;
   --s3: 12px;
@@ -44,6 +47,8 @@ CSS = r"""
     --brand: #2DD4A4;
     --user-bubble: #1B2A44;
     --user-bubble-text: #E8EDF4;
+    --brand-tint: rgba(45,212,164,0.12);
+    --on-brand: #04261C;
     --ok: #2DD4A4;
     --ok-bg: #0F2E26;
     --warn: #F5A623;
@@ -281,31 +286,73 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 .composer-caption { text-align: center; font-size: 11px; color: var(--text-2); margin-top: var(--s2); }
 
 /* Follow-up pills */
-[data-testid="stPills"] { margin-top: var(--s3); }
+[data-testid="stPills"] {
+  margin-top: var(--s3);
+  margin-left: var(--assistant-indent);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 [data-testid="stPills"] button,
-[data-testid="stPills"] [role="radio"] {
-  border: 1px solid var(--border) !important;
+[data-testid="stButtonGroup"] button,
+[data-testid="stPills"] [data-baseweb="button-group"] button {
   background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
   color: var(--text) !important;
-  border-radius: var(--radius-pill) !important;
-  padding: 8px 16px !important;
   font-size: 14px !important;
-  font-weight: 400 !important;
-  height: auto !important;
+  padding: 8px 16px !important;
+  border-radius: var(--radius-pill) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
 }
 [data-testid="stPills"] button:hover,
 [data-testid="stPills"] button:focus-visible,
-[data-testid="stPills"] [role="radio"]:hover {
+[data-testid="stPills"] [data-baseweb="button-group"] button:hover,
+[data-testid="stPills"] [data-baseweb="button-group"] button:focus-visible,
+[data-testid="stButtonGroup"] button:hover,
+[data-testid="stButtonGroup"] button:focus-visible {
+  background: var(--brand-tint) !important;
   border-color: var(--brand) !important;
   color: var(--brand) !important;
   outline: none !important;
   box-shadow: none !important;
 }
+[data-testid="stPills"] button:active,
+[data-testid="stPills"] button[aria-pressed="true"],
 [data-testid="stPills"] button[aria-checked="true"],
-[data-testid="stPills"] [role="radio"][aria-checked="true"] {
+[data-testid="stPills"] button[data-selected],
+[data-testid="stPills"] [data-baseweb="button-group"] button:active,
+[data-testid="stPills"] [data-baseweb="button-group"] button[aria-pressed="true"],
+[data-testid="stPills"] [data-baseweb="button-group"] button[aria-checked="true"],
+[data-testid="stPills"] [data-baseweb="button-group"] button[data-selected],
+[data-testid="stButtonGroup"] button:active,
+[data-testid="stButtonGroup"] button[aria-pressed="true"],
+[data-testid="stButtonGroup"] button[aria-checked="true"],
+[data-testid="stButtonGroup"] button[data-selected] {
+  background: var(--brand) !important;
   border-color: var(--brand) !important;
-  background: var(--surface) !important;
-  color: var(--brand) !important;
+  color: var(--on-brand) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+[data-testid="stPills"] button p,
+[data-testid="stPills"] button span,
+[data-testid="stPills"] button div,
+[data-testid="stPills"] [data-baseweb="button-group"] button p,
+[data-testid="stPills"] [data-baseweb="button-group"] button span,
+[data-testid="stPills"] [data-baseweb="button-group"] button div,
+[data-testid="stButtonGroup"] button p,
+[data-testid="stButtonGroup"] button span,
+[data-testid="stButtonGroup"] button div {
+  color: inherit !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-testid="stPills"] button,
+  [data-testid="stPills"] [data-baseweb="button-group"] button,
+  [data-testid="stButtonGroup"] button {
+    transition: none !important;
+  }
 }
 
 /* Typing indicator */
