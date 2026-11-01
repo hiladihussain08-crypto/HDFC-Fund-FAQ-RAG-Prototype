@@ -70,6 +70,10 @@ INTENT_LABEL = {
 _HERO_RE = re.compile(r"(₹\s?[\d,]+(?:\.\d+)?|\d[\d,]*\.?\d*\s*%)")
 _STARTERS = ["Expense ratio", "Exit load", "Minimum SIP", "Fund manager"]
 
+st.session_state.setdefault("messages", [])
+st.session_state.setdefault("pending_prompt", "")
+st.session_state.setdefault("has_started", False)
+
 
 def status_for(route: str) -> tuple[str, str]:
     if route == "answer":
@@ -91,15 +95,6 @@ def extract_hero(answer: str):
     return hero, secondary
 
 
-def hero_remainder(answer: str, hero: str, secondary: str | None) -> str:
-    text = answer
-    text = text.replace(hero, "", 1)
-    if secondary:
-        text = text.replace(f"({secondary})", "", 1)
-    text = " ".join(text.split())
-    return text
-
-
 def format_updated(last_updated: str) -> str:
     stamp = last_updated.replace("Last updated from sources:", "").strip()
     try:
@@ -116,14 +111,15 @@ def domain_of(url: str) -> str:
         return url
 
 
-def render_user(content: str) -> None:
-    st.markdown(
-        f'<div class="turn user"><div class="user-bubble">{html.escape(content)}</div></div>',
-        unsafe_allow_html=True,
-    )
+def esc(s) -> str:
+    return html.escape(str(s) if s is not None else "")
 
 
-def render_assistant(response: dict) -> None:
+def render_user(content: str) -> str:
+    return f'<div class="turn user"><div class="user-bubble">{esc(content)}</div></div>'
+
+
+def render_assistant(response: dict) -> str:
     status_class, status_label = status_for(response["route"])
     route = response["route"]
     intent = response.get("intent", "other")
@@ -131,28 +127,24 @@ def render_assistant(response: dict) -> None:
 
     hero, secondary = (extract_hero(answer) if route == "answer" else (None, None))
 
-    # Answer card
     if route == "answer" and hero:
         label = INTENT_LABEL.get(intent, intent.replace("_", " ").title())
-        secondary_html = f'<span class="hero-secondary">{html.escape(secondary)}</span>' if secondary else ""
-        remainder = hero_remainder(answer, hero, secondary)
-        extra_html = f'<div class="answer-text"><p>{html.escape(remainder)}</p></div>' if len(remainder) > 25 else ""
+        secondary_html = f'<span class="hero-secondary">{esc(secondary)}</span>' if secondary else ""
         card_html = (
             f'<div class="answer-card">'
             f'  <div class="hero-row">'
             f'    <div class="hero-block">'
-            f'      <div class="hero-label">{html.escape(label)}</div>'
-            f'      <div class="hero-number">{html.escape(hero)}</div>'
+            f'      <div class="hero-label">{esc(label)}</div>'
+            f'      <div class="hero-number">{esc(hero)}</div>'
             f'    </div>'
             f'    {secondary_html}'
             f'  </div>'
-            f'  {extra_html}'
             f'</div>'
         )
     else:
         card_html = (
             f'<div class="answer-card">'
-            f'  <div class="answer-text"><p>{html.escape(answer)}</p></div>'
+            f'  <div class="answer-text"><p>{esc(answer)}</p></div>'
             f'</div>'
         )
 
@@ -162,76 +154,60 @@ def render_assistant(response: dict) -> None:
         domain = domain_of(citation_url)
         source_html = (
             f'<div class="source-row">'
-            f'  <a class="domain-chip" href="{html.escape(citation_url)}" target="_blank" rel="noopener noreferrer">{html.escape(domain)}</a>'
-            f'  <span style="display:inline-flex;align-items:center;gap:4px;">'
-            f'    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
-            f'    {html.escape(format_updated(response.get("last_updated", "")))}'
+            f'  <span class="source-row-left">'
+            f'    <a class="domain-chip" href="{esc(citation_url)}" target="_blank" rel="noopener noreferrer">{esc(domain)}</a>'
+            f'    <span style="display:inline-flex;align-items:center;gap:4px;">'
+            f'      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+            f'      {esc(format_updated(response.get("last_updated", "")))}'
+            f'    </span>'
             f'  </span>'
-            f'</div>'
+            f'  <details style="margin:0;"><summary style="cursor:pointer;font-size:12px;color:var(--text-2);font-weight:500;list-style:none;">How this was answered</summary>'
+            f'    <div style="margin-top:8px;">'
+            f'      <div>Mode: {esc(response["generation"].get("mode", "policy"))}</div>'
+            f'      <div>Intent: {esc(intent)}</div>'
+            f'      <div>Latency: {response["latency_ms"]} ms</div>'
+            f'      <div>Query ID: {esc(response["query_id"])}</div>'
         )
+        if response.get("hits"):
+            source_html += '      <div style="margin-top:8px;font-weight:600;">Retrieved chunks</div>'
+            for hit in response["hits"]:
+                source_html += (
+                    f'      <div style="margin:4px 0;"><strong>{hit["score"]:.3f}</strong> · {esc(hit.get("heading", ""))} · {esc(hit.get("source_title", ""))}</div>'
+                    f'      <div style="font-size:12px;color:var(--text-2);">{esc(hit.get("text", "")[:400])}</div>'
+                    f'      <div style="font-size:12px;color:var(--text-2);">Citation: {esc(hit.get("source_url", ""))}</div>'
+                )
+        source_html += '      <div style="margin-top:8px;font-weight:600;">Stage artifacts</div>'
+        for label, path in response["artifacts"].items():
+            try:
+                content = json.dumps(read_json(Path(path)), indent=2, ensure_ascii=False)
+            except Exception:  # noqa: BLE001
+                content = f"Could not read {path}"
+            source_html += (
+                f'      <div style="font-weight:500;margin-top:4px;">{esc(label)} — {esc(path)}</div>'
+                f'      <pre style="font-size:11px;max-height:200px;overflow:auto;background:var(--bg);padding:8px;border-radius:6px;">{esc(content)}</pre>'
+            )
+        source_html += '    </div></details></div>'
 
     chips_html = ""
     if route == "answer":
         scheme = SCHEME_BY_ID.get(response.get("scheme", ""))
-        chips = FOLLOWUPS.get(intent, [])
+        chips = FOLLOWUPS.get(intent, [])[:3]
         if scheme and chips:
             chips_html = '<div class="chip-row">' + "".join(
-                f'<button class="chip" data-chip="{html.escape(chip)}">{html.escape(chip)}</button>'
+                f'<button class="chip" onclick="window.location.search=\'?chip={esc(chip)}\'">{esc(chip)}</button>'
                 for chip in chips
             ) + "</div>"
 
+    status_class, status_label = status_for(route)
     avatar_html = '<div class="avatar">F</div>'
     stack_html = (
-        f'<span class="status-chip {status_class}"><span class="dot"></span>{status_label}</span>'
+        f'<span class="status-chip {status_class}"><span class="dot"></span>{esc(status_label)}</span>'
         + card_html
         + source_html
-        + f'<div class="meta">mode={html.escape(str(response["generation"].get("mode", "policy")))} · intent={html.escape(intent)} · {response["latency_ms"]} ms · query_id={html.escape(response["query_id"])}</div>'
         + chips_html
     )
 
-    st.markdown(
-        f'<div class="turn assistant">{avatar_html}<div class="assistant-stack">{stack_html}</div></div>',
-        unsafe_allow_html=True,
-    )
-
-    # How this was answered expander
-    with st.expander("How this was answered", expanded=False):
-        st.markdown(
-            f"**Mode:** {response['generation'].get('mode', 'policy')}  \n"
-            f"**Intent:** {intent}  \n"
-            f"**Latency:** {response['latency_ms']} ms  \n"
-            f"**Query ID:** {response['query_id']}"
-        )
-        if response.get("hits"):
-            st.markdown("**Retrieved chunks**")
-            for hit in response["hits"]:
-                st.markdown(
-                    f"**{hit['score']:.3f}** · {hit.get('heading', '')} · "
-                    f"{hit.get('source_title', '')}"
-                )
-                st.caption(hit.get("text", "")[:600])
-                st.caption(f"Citation: {hit.get('source_url', '')}")
-                st.divider()
-        st.markdown("**Stage artifacts**")
-        for label, path in response["artifacts"].items():
-            try:
-                st.markdown(f"**{label}** — `{path}`")
-                st.json(read_json(Path(path)))
-            except Exception as exc:  # noqa: BLE001
-                st.caption(f"Could not read {path}: {exc}")
-
-    # Wire up follow-up chips via session state through a hidden mechanism:
-    # Streamlit buttons cannot be inside unsafe HTML, so render real buttons.
-    if route == "answer":
-        scheme = SCHEME_BY_ID.get(response.get("scheme", ""))
-        chips = FOLLOWUPS.get(intent, [])
-        if scheme and chips:
-            cols = st.columns(len(chips))
-            for col, chip in zip(cols, chips):
-                if col.button(chip, key=f"fu_{response['query_id']}_{chip}"):
-                    topic = CHIP_TOPIC.get(chip, chip.lower())
-                    st.session_state.pending_prompt = f"What is the {topic} of {scheme.name}?"
-                    st.rerun()
+    return f'<div class="turn assistant">{avatar_html}<div class="assistant-stack">{stack_html}</div></div>'
 
 
 # ---------- header ----------
@@ -246,36 +222,49 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ---------- session state ----------
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-if "pending_prompt" not in st.session_state:
-    st.session_state.pending_prompt = ""
+# ---------- handle chip query param ----------
+qp = st.query_params
+if "chip" in qp:
+    chip = qp["chip"]
+    if isinstance(chip, list):
+        chip = chip[0] if chip else ""
+    if chip:
+        topic = CHIP_TOPIC.get(chip)
+        if topic:
+            fund = "HDFC Large Cap Fund Direct Growth"
+            for m in reversed(st.session_state.messages):
+                if m["role"] == "assistant":
+                    ans = m["response"].get("answer", "")
+                    mm = re.search(r"of (.+?) (?:is|was|has)", ans, re.IGNORECASE)
+                    if mm:
+                        fund = mm.group(1).strip()
+                    break
+            st.session_state.pending_prompt = f"What is the {topic} of {fund}?"
+    st.query_params.clear()
 
-# ---------- welcome state ----------
-if not st.session_state.messages:
+# ---------- welcome / transcript ----------
+if not st.session_state.has_started and not st.session_state.messages:
     st.markdown(
         '<div class="welcome"><h2>Ask about any mutual fund</h2>'
         '<p>Factual answers from official fund pages, with one citation per answer.</p></div>',
         unsafe_allow_html=True,
     )
     st.markdown('<div class="starter-chips">', unsafe_allow_html=True)
-    cols = st.columns(len(_STARTERS))
-    for col, label in zip(cols, _STARTERS):
-        if col.button(label, key=f"starter_{label}"):
-            topic = CHIP_TOPIC[label]
-            st.session_state.pending_prompt = f"What is the {topic} of HDFC Large Cap Fund Direct Growth?"
-            st.rerun()
+    for label in _STARTERS:
+        st.markdown(
+            f'<button class="chip" onclick="window.location.search=\'?chip={label}\'">{esc(label)}</button>',
+            unsafe_allow_html=True,
+        )
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ---------- thread ----------
+# transcript
 st.markdown('<div class="thread" id="thread">', unsafe_allow_html=True)
 for message in st.session_state.messages:
     if message["role"] == "user":
-        render_user(message["content"])
+        st.markdown(render_user(message["content"]), unsafe_allow_html=True)
     else:
-        render_assistant(message["response"])
-st.markdown('<div id="thread-bottom"></div></div>', unsafe_allow_html=True)
+        st.markdown(render_assistant(message["response"]), unsafe_allow_html=True)
+st.markdown('<div id="thread-bottom" style="height:1px;"></div></div>', unsafe_allow_html=True)
 
 # ---------- input ----------
 prompt = st.chat_input("Ask about expense ratio, exit load, SIP…")
@@ -284,8 +273,9 @@ if st.session_state.pending_prompt:
     st.session_state.pending_prompt = ""
 
 if prompt:
+    st.session_state.has_started = True
     st.session_state.messages.append({"role": "user", "content": prompt})
-    render_user(prompt)
+    st.markdown(render_user(prompt), unsafe_allow_html=True)
 
     placeholder = st.empty()
     placeholder.markdown(
@@ -300,10 +290,9 @@ if prompt:
         st.error("The pipeline is not ready. Run the ingest steps first, then try again.")
         st.stop()
     placeholder.empty()
-    render_assistant(response)
+    st.markdown(render_assistant(response), unsafe_allow_html=True)
     st.session_state.messages.append({"role": "assistant", "response": response})
 
-# scroll to bottom
 components.html(
     "<script>window.parent.document.getElementById('thread-bottom').scrollIntoView({behavior:'smooth',block:'end'});</script>",
     height=0,
