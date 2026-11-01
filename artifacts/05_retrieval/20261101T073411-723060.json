@@ -1,0 +1,16 @@
+{
+  "query_id": "20261101T073411-723060",
+  "timestamp": "2026-11-01T07:34:11Z",
+  "question": "Which is better, Mid Cap or Flexi Cap?",
+  "route": "refuse_advice",
+  "reason": "advice_or_ranking",
+  "scheme": "groww-flexi-cap",
+  "intent": "other",
+  "k": 5,
+  "min_score": 0.3,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "collection": "hdfc_mf_faq",
+  "hits": [],
+  "raw": [],
+  "retrieval_skipped": true
+}

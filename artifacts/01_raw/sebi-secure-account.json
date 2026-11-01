@@ -1,0 +1,15 @@
+{
+  "id": "sebi-secure-account",
+  "url": "https://investor.sebi.gov.in/secure_ur_inv_account.html",
+  "final_url": "https://investor.sebi.gov.in/secure_ur_inv_account.html",
+  "category": "Investor education",
+  "title": "Secure Your Investment Account",
+  "scheme": "",
+  "doc_type": "regulator",
+  "fetched_at": "2026-11-01T07:18:33Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\sebi-secure-account.html",
+  "content_bytes": 10472
+}

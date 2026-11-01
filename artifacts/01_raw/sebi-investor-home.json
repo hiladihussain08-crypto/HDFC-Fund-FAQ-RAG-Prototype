@@ -1,0 +1,15 @@
+{
+  "id": "sebi-investor-home",
+  "url": "https://investor.sebi.gov.in/",
+  "final_url": "https://investor.sebi.gov.in/",
+  "category": "Investor education",
+  "title": "SEBI Investor Education",
+  "scheme": "",
+  "doc_type": "regulator",
+  "fetched_at": "2026-11-01T07:18:30Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\sebi-investor-home.html",
+  "content_bytes": 65762
+}

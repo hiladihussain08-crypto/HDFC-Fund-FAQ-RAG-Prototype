@@ -1,0 +1,43 @@
+{
+  "phase": "05_embedding",
+  "created_at": "2026-11-01T08:33:30Z",
+  "artifact": "chunk_embeddings.npz",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "batch_size": 32,
+  "normalized": true,
+  "dim": 384,
+  "count": 129,
+  "passed": true,
+  "checks": [
+    {
+      "check": "count_equals_chunks",
+      "passed": true,
+      "detail": "vectors=129 chunks=129"
+    },
+    {
+      "check": "vectors_are_expected_dim",
+      "passed": true,
+      "detail": "expected=384 shape=[129, 384]"
+    },
+    {
+      "check": "vectors_are_finite",
+      "passed": true,
+      "detail": "no NaN or Inf"
+    },
+    {
+      "check": "vectors_match_normalize_setting",
+      "passed": true,
+      "detail": "max_|norm-1|=0.000000 off=0"
+    },
+    {
+      "check": "every_vector_keeps_citation",
+      "passed": true,
+      "detail": "rows_without_url=0"
+    },
+    {
+      "check": "model_comes_from_config",
+      "passed": true,
+      "detail": "model=sentence-transformers/all-MiniLM-L6-v2 batch=32 normalize=True"
+    }
+  ]
+}

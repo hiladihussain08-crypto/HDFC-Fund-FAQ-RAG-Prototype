@@ -1,0 +1,15 @@
+{
+  "id": "sebi-cas",
+  "url": "https://investor.sebi.gov.in/consolidated_account_statement.html",
+  "final_url": "https://investor.sebi.gov.in/consolidated_account_statement.html",
+  "category": "Investor education",
+  "title": "Consolidated Account Statement",
+  "scheme": "",
+  "doc_type": "regulator",
+  "fetched_at": "2026-11-01T07:18:32Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\sebi-cas.html",
+  "content_bytes": 9832
+}

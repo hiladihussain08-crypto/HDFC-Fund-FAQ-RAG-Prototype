@@ -1,0 +1,25 @@
+{
+  "phase": "05_embedding",
+  "created_at": "2026-11-01T08:33:30Z",
+  "artifact": "chunk_embeddings.npz",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "batch_size": 32,
+  "normalized": true,
+  "expected_dim": 384,
+  "dim": 384,
+  "count": 129,
+  "metadata_fields": [
+    "chunk_id",
+    "source_id",
+    "source_url",
+    "scheme",
+    "category",
+    "doc_type",
+    "heading",
+    "section",
+    "breadcrumb",
+    "kind",
+    "token_count",
+    "fetched_at"
+  ]
+}

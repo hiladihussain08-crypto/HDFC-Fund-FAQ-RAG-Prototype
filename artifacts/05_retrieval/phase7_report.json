@@ -1,0 +1,231 @@
+{
+  "phase": "07_retrieval",
+  "created_at": "2026-11-01T08:49:23Z",
+  "collection": "hdfc_mf_faq",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "space": "cosine",
+  "min_score": 0.3,
+  "k": 5,
+  "candidate_k": 24,
+  "golden_questions": 10,
+  "top3_hits": 10,
+  "hit_rate": 1.0,
+  "citation_urls_allowlisted": true,
+  "passed": true,
+  "results": [
+    {
+      "question": "What is the expense ratio of HDFC Large Cap Fund Direct Growth?",
+      "expected": [
+        "groww-large-cap::fact::expense-ratio"
+      ],
+      "top3": [
+        "groww-large-cap::fact::expense-ratio",
+        "groww-large-cap::fact::category",
+        "groww-large-cap::fact::minimum-additional"
+      ],
+      "matched": [
+        "groww-large-cap::fact::expense-ratio"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.9049,
+        0.8439,
+        0.8282
+      ]
+    },
+    {
+      "question": "What is the expense ratio of HDFC ELSS Tax Saver Fund Direct Plan Growth?",
+      "expected": [
+        "groww-elss::fact::expense-ratio"
+      ],
+      "top3": [
+        "groww-elss::fact::expense-ratio",
+        "groww-elss::fact::minimum-lumpsum",
+        "groww-elss::fact::category"
+      ],
+      "matched": [
+        "groww-elss::fact::expense-ratio"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.8943,
+        0.8079,
+        0.8072
+      ]
+    },
+    {
+      "question": "What is the lock-in period for HDFC ELSS Tax Saver Fund?",
+      "expected": [
+        "groww-elss::fact::lock-in"
+      ],
+      "top3": [
+        "groww-elss::fact::lock-in",
+        "groww-elss::fact::launch-date",
+        "groww-elss::fact::exit-load"
+      ],
+      "matched": [
+        "groww-elss::fact::lock-in"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.8204,
+        0.7224,
+        0.7023
+      ]
+    },
+    {
+      "question": "What is the minimum SIP for HDFC Large Cap Fund Direct Growth?",
+      "expected": [
+        "groww-large-cap::fact::minimum-sip"
+      ],
+      "top3": [
+        "groww-large-cap::fact::minimum-sip",
+        "groww-large-cap::fact::minimum-additional",
+        "groww-large-cap::fact::minimum-lumpsum"
+      ],
+      "matched": [
+        "groww-large-cap::fact::minimum-sip"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.8905,
+        0.8185,
+        0.79
+      ]
+    },
+    {
+      "question": "What is the minimum SIP for HDFC Mid Cap Fund Direct Growth?",
+      "expected": [
+        "groww-mid-cap::fact::minimum-sip"
+      ],
+      "top3": [
+        "groww-mid-cap::fact::minimum-sip",
+        "groww-mid-cap::fact::minimum-additional",
+        "groww-mid-cap::fact::minimum-lumpsum"
+      ],
+      "matched": [
+        "groww-mid-cap::fact::minimum-sip"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.892,
+        0.8192,
+        0.7911
+      ]
+    },
+    {
+      "question": "What is the exit load of HDFC Flexi Cap Direct Plan Growth?",
+      "expected": [
+        "groww-flexi-cap::fact::exit-load"
+      ],
+      "top3": [
+        "groww-flexi-cap::fact::exit-load",
+        "groww-flexi-cap::fact::launch-date",
+        "groww-flexi-cap::fact::stamp-duty"
+      ],
+      "matched": [
+        "groww-flexi-cap::fact::exit-load"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.8925,
+        0.8296,
+        0.8007
+      ]
+    },
+    {
+      "question": "What is the benchmark of HDFC Mid Cap Fund Direct Growth?",
+      "expected": [
+        "groww-mid-cap::fact::benchmark"
+      ],
+      "top3": [
+        "groww-mid-cap::fact::benchmark",
+        "groww-mid-cap::fact::launch-date",
+        "groww-mid-cap::fact::fund-house"
+      ],
+      "matched": [
+        "groww-mid-cap::fact::benchmark"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.856,
+        0.8556,
+        0.8328
+      ]
+    },
+    {
+      "question": "What is the riskometer level of HDFC ELSS Tax Saver Fund?",
+      "expected": [
+        "groww-elss::fact::riskometer"
+      ],
+      "top3": [
+        "groww-elss::fact::riskometer",
+        "groww-elss::fact::stamp-duty",
+        "groww-elss::fact::minimum-lumpsum"
+      ],
+      "matched": [
+        "groww-elss::fact::riskometer"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.853,
+        0.7599,
+        0.7347
+      ]
+    },
+    {
+      "question": "Which AMC manages HDFC Large Cap Fund Direct Growth?",
+      "expected": [
+        "groww-large-cap::fact::fund-house"
+      ],
+      "top3": [
+        "groww-large-cap::fact::category",
+        "groww-large-cap::fact::fund-house",
+        "groww-large-cap::fact::fund-manager"
+      ],
+      "matched": [
+        "groww-large-cap::fact::fund-house"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.8605,
+        0.8513,
+        0.8477
+      ]
+    },
+    {
+      "question": "How do I download my capital gains statement?",
+      "expected": [
+        "groww-learn-capital-gains",
+        "groww-help",
+        "groww-blog"
+      ],
+      "top3": [
+        "groww-learn-capital-gains::sec::online-investment-platforms::1002",
+        "groww-help-tax-proof-80c::sec::where-can-i-get-the-tax-proof-fo::1000",
+        "groww-learn-capital-gains::sec::cams-and-kfin-technologies-limit::1004"
+      ],
+      "matched": [
+        "groww-learn-capital-gains::sec::online-investment-platforms::1002",
+        "groww-help-tax-proof-80c::sec::where-can-i-get-the-tax-proof-fo::1000",
+        "groww-learn-capital-gains::sec::cams-and-kfin-technologies-limit::1004"
+      ],
+      "passed": true,
+      "citation_urls_allowlisted": true,
+      "scores": [
+        0.6533,
+        0.6439,
+        0.6112
+      ]
+    }
+  ]
+}

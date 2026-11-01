@@ -1,0 +1,15 @@
+{
+  "id": "groww-flexi-cap",
+  "url": "https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth",
+  "final_url": "https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth",
+  "category": "Flexi Cap",
+  "title": "HDFC Flexi Cap Direct Plan Growth",
+  "scheme": "groww-flexi-cap",
+  "doc_type": "scheme_page",
+  "fetched_at": "2026-11-01T07:18:26Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\groww-flexi-cap.html",
+  "content_bytes": 501084
+}

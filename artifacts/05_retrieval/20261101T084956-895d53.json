@@ -1,0 +1,16 @@
+{
+  "query_id": "20261101T084956-895d53",
+  "timestamp": "2026-11-01T08:49:56Z",
+  "question": "Should I buy HDFC Large Cap now?",
+  "route": "refuse_advice",
+  "reason": "advice_or_ranking",
+  "scheme": "groww-large-cap",
+  "intent": "other",
+  "k": 5,
+  "min_score": 0.3,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "collection": "hdfc_mf_faq",
+  "hits": [],
+  "raw": [],
+  "retrieval_skipped": true
+}

@@ -1,0 +1,15 @@
+{
+  "id": "mfsahihai-home",
+  "url": "https://www.mutualfundssahihai.com/en",
+  "final_url": "https://www.mutualfundssahihai.com/en",
+  "category": "Investor education",
+  "title": "Mutual Funds Sahi Hai (AMFI initiative)",
+  "scheme": "",
+  "doc_type": "amc_education",
+  "fetched_at": "2026-11-01T07:18:35Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\mfsahihai-home.html",
+  "content_bytes": 290819
+}

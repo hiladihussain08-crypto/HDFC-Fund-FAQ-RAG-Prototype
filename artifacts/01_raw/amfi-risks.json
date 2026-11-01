@@ -1,0 +1,15 @@
+{
+  "id": "amfi-risks",
+  "url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=riskInMutualFunds",
+  "final_url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=riskInMutualFunds",
+  "category": "Investor education",
+  "title": "Risks in Mutual Funds",
+  "scheme": "",
+  "doc_type": "amc_education",
+  "fetched_at": "2026-11-01T07:18:34Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\amfi-risks.html",
+  "content_bytes": 200246
+}

@@ -1,0 +1,19 @@
+{
+  "query_id": "20261101T072236-171612",
+  "timestamp": "2026-11-01T07:22:36Z",
+  "question": "How did the fund perform last year?",
+  "route": "miss",
+  "reason": "missing_scheme",
+  "mode": "policy_response",
+  "system_prompt": "",
+  "user_prompt": "",
+  "context_pack": [],
+  "raw_completion": "",
+  "answer": "Please name one of the covered HDFC schemes so I can look up the exact fact: HDFC Large Cap Fund, HDFC Flexi Cap Fund, HDFC ELSS Tax Saver Fund, HDFC Mid Cap Fund.",
+  "citation_url": "https://groww.in/mutual-funds/amc/hdfc-mutual-funds",
+  "last_updated": "Last updated from sources: 2026-11-01",
+  "provider": "",
+  "model": "",
+  "error": "",
+  "pii_redacted": false
+}

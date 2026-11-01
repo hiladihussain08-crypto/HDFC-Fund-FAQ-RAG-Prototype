@@ -1,0 +1,19 @@
+{
+  "query_id": "20261101T084956-675a7a",
+  "timestamp": "2026-11-01T08:49:56Z",
+  "question": "[redacted: PII detected]",
+  "route": "refuse_pii",
+  "reason": "pii:Aadhaar",
+  "mode": "policy_response",
+  "system_prompt": "",
+  "user_prompt": "",
+  "context_pack": [],
+  "raw_completion": "",
+  "answer": "I can't accept or store PAN, Aadhaar, account numbers, OTPs, emails, or phone numbers. Please remove that information and ask a factual question about a covered HDFC scheme.",
+  "citation_url": "https://investor.sebi.gov.in/secure_ur_inv_account.html",
+  "last_updated": "Last updated from sources: 2026-11-01",
+  "provider": "",
+  "model": "",
+  "error": "",
+  "pii_redacted": true
+}

@@ -1,0 +1,30 @@
+{
+  "phase": "01_raw",
+  "fetched_at": "2026-11-01T07:18:35Z",
+  "sources_file": "data\\sources.csv",
+  "count": 19,
+  "ok": 19,
+  "failed": 0,
+  "ids": [
+    "groww-amc-hdfc",
+    "groww-large-cap",
+    "groww-flexi-cap",
+    "groww-elss",
+    "groww-mid-cap",
+    "groww-help-elss-report",
+    "groww-help-tax-proof-80c",
+    "groww-help-cas-cams",
+    "groww-help-pnl-statement",
+    "groww-learn-capital-gains",
+    "sebi-investor-home",
+    "sebi-personal-investments",
+    "sebi-cas",
+    "sebi-secure-account",
+    "amfi-investor-corner",
+    "amfi-expense-ratio",
+    "amfi-risks",
+    "mfsahihai-home",
+    "cams-cas"
+  ],
+  "failed_ids": []
+}

@@ -1,0 +1,16 @@
+{
+  "query_id": "20261101T084956-fc3011",
+  "timestamp": "2026-11-01T08:49:56Z",
+  "question": "What is the expense ratio of SBI Bluechip Fund?",
+  "route": "miss",
+  "reason": "foreign_amc",
+  "scheme": "",
+  "intent": "expense_ratio",
+  "k": 5,
+  "min_score": 0.3,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "collection": "hdfc_mf_faq",
+  "hits": [],
+  "raw": [],
+  "retrieval_skipped": true
+}

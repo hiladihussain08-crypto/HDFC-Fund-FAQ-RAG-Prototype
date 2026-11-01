@@ -1,0 +1,136 @@
+{
+  "phase": "01_loaded",
+  "loaded": 18,
+  "skipped": 1,
+  "documents": [
+    {
+      "id": "amfi-expense-ratio",
+      "chars": 1877,
+      "sections": 2,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "amfi-investor-corner",
+      "chars": 660,
+      "sections": 17,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "amfi-risks",
+      "chars": 7471,
+      "sections": 4,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "groww-amc-hdfc",
+      "chars": 14339,
+      "sections": 25,
+      "facts": 12,
+      "extraction": "groww_next_data:amc"
+    },
+    {
+      "id": "groww-elss",
+      "chars": 4854,
+      "sections": 9,
+      "facts": 18,
+      "extraction": "groww_next_data:scheme"
+    },
+    {
+      "id": "groww-flexi-cap",
+      "chars": 6638,
+      "sections": 10,
+      "facts": 18,
+      "extraction": "groww_next_data:scheme"
+    },
+    {
+      "id": "groww-help-cas-cams",
+      "chars": 630,
+      "sections": 1,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "groww-help-elss-report",
+      "chars": 155,
+      "sections": 1,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "groww-help-pnl-statement",
+      "chars": 219,
+      "sections": 1,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "groww-help-tax-proof-80c",
+      "chars": 192,
+      "sections": 1,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "groww-large-cap",
+      "chars": 4438,
+      "sections": 10,
+      "facts": 18,
+      "extraction": "groww_next_data:scheme"
+    },
+    {
+      "id": "groww-learn-capital-gains",
+      "chars": 4931,
+      "sections": 7,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "groww-mid-cap",
+      "chars": 6243,
+      "sections": 10,
+      "facts": 18,
+      "extraction": "groww_next_data:scheme"
+    },
+    {
+      "id": "mfsahihai-home",
+      "chars": 1306,
+      "sections": 7,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "sebi-cas",
+      "chars": 533,
+      "sections": 2,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "sebi-investor-home",
+      "chars": 1173,
+      "sections": 6,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "sebi-personal-investments",
+      "chars": 1276,
+      "sections": 4,
+      "facts": 0,
+      "extraction": "html_text"
+    },
+    {
+      "id": "sebi-secure-account",
+      "chars": 808,
+      "sections": 2,
+      "facts": 0,
+      "extraction": "html_text"
+    }
+  ],
+  "skipped_ids": [
+    "cams-cas"
+  ]
+}

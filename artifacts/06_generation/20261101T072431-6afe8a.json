@@ -1,0 +1,19 @@
+{
+  "query_id": "20261101T072431-6afe8a",
+  "timestamp": "2026-11-01T07:24:31Z",
+  "question": "How did the fund perform last year?",
+  "route": "refuse_returns",
+  "reason": "returns_or_performance",
+  "mode": "policy_response",
+  "system_prompt": "",
+  "user_prompt": "",
+  "context_pack": [],
+  "raw_completion": "",
+  "answer": "I don't compute or compare returns, NAV movements, or fund performance. For investor education on risk and returns, see the SEBI Investor Education page.",
+  "citation_url": "https://investor.sebi.gov.in/personalinvestments.html",
+  "last_updated": "Last updated from sources: 2026-11-01",
+  "provider": "",
+  "model": "",
+  "error": "",
+  "pii_redacted": false
+}

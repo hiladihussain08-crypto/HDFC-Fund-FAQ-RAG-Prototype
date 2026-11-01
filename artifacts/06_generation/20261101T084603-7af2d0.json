@@ -1,0 +1,70 @@
+{
+  "query_id": "20261101T084603-7af2d0",
+  "timestamp": "2026-11-01T08:46:03Z",
+  "question": "What is the lock-in period for HDFC ELSS Tax Saver Fund?",
+  "route": "answer",
+  "reason": "factual",
+  "mode": "extractive_fallback",
+  "system_prompt": "You are the Groww Mutual Fund FAQ Assistant, a facts-only retrieval assistant for four HDFC Mutual Fund schemes and Groww/SEBI/AMFI help pages.\n\nRULES\n1. Identify the exact fact the user asks: expense ratio, exit load, minimum SIP or lump-sum, lock-in, riskometer, benchmark, fund manager, AUM, category, launch date, stamp duty, or how to download a statement.\n2. Answer in at most 3 short sentences. No bullets, no markdown, no headings.\n3. Use ONLY the facts in CONTEXT. Never guess, infer, or use outside knowledge.\n4. Never give investment advice, recommendations, rankings, or opinions.\n5. Never compute, compare, or quote returns, CAGR, NAV, or performance.\n6. If CONTEXT does not contain the exact fact, output exactly: NOT_IN_CONTEXT\n7. Do not include URLs, source lines, or last-updated lines. The application adds exactly one citation.\n8. If the question names a scheme, use only that scheme's facts. Never mix schemes.\n9. For statement questions, give the concrete steps found in CONTEXT.\n",
+  "user_prompt": "QUESTION: What is the lock-in period for HDFC ELSS Tax Saver Fund?\n\nCONTEXT:\n[1] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Lock-in (similarity 0.82)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Lock-in: 3 years.\n\n[2] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Launch date (similarity 0.72)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Launch date: 01-Jan-2013.\n\n[3] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Exit load (similarity 0.70)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Exit load: Nil.\n\n[4] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Stamp duty (similarity 0.69)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Stamp duty: 0.005% (from July 1st, 2020).\n\n[5] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Fund house (similarity 0.68)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Fund house: HDFC Mutual Fund.\n\nANSWER (max 3 sentences, facts from CONTEXT only):",
+  "context_pack": [
+    {
+      "index": 1,
+      "chunk_id": "groww-elss::fact::lock-in",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Lock-in",
+      "kind": "fact",
+      "score": 0.8204,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Lock-in: 3 years."
+    },
+    {
+      "index": 2,
+      "chunk_id": "groww-elss::fact::launch-date",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Launch date",
+      "kind": "fact",
+      "score": 0.7224,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Launch date: 01-Jan-2013."
+    },
+    {
+      "index": 3,
+      "chunk_id": "groww-elss::fact::exit-load",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Exit load",
+      "kind": "fact",
+      "score": 0.7023,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Exit load: Nil."
+    },
+    {
+      "index": 4,
+      "chunk_id": "groww-elss::fact::stamp-duty",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Stamp duty",
+      "kind": "fact",
+      "score": 0.6914,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Stamp duty: 0.005% (from July 1st, 2020)."
+    },
+    {
+      "index": 5,
+      "chunk_id": "groww-elss::fact::fund-house",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Fund house",
+      "kind": "fact",
+      "score": 0.6775,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Fund house: HDFC Mutual Fund."
+    }
+  ],
+  "raw_completion": "",
+  "answer": "The lock-in period for HDFC ELSS Tax Saver Fund Direct Plan Growth is 3 years.",
+  "citation_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+  "last_updated": "2026-11-01",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "error": "missing_api_key (GROQ_API_KEY)",
+  "used_chunk_id": "groww-elss::fact::lock-in"
+}

@@ -1,0 +1,14 @@
+{
+  "phase": "06_vectordb",
+  "ingested_at": "2026-11-01T08:43:29Z",
+  "collection": "hdfc_mf_faq",
+  "persist_dir": "chroma_db",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "space": "cosine",
+  "dim": 384,
+  "count": 129,
+  "chunks_written": 129,
+  "count_matches_chunks": true,
+  "upsert_batch_size": 128,
+  "reset": true
+}

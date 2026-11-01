@@ -1,0 +1,60 @@
+{
+  "phase": "06_vectordb",
+  "created_at": "2026-11-01T08:43:29Z",
+  "collection": "hdfc_mf_faq",
+  "persist_dir": "chroma_db",
+  "space": "cosine",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "count": 129,
+  "passed": true,
+  "checks": [
+    {
+      "check": "collection_count_equals_chunks",
+      "passed": true,
+      "detail": "chroma=129 chunks=129"
+    },
+    {
+      "check": "document_text_round_trip",
+      "passed": true,
+      "detail": "mismatched=0"
+    },
+    {
+      "check": "citation_metadata_stored",
+      "passed": true,
+      "detail": "incomplete=0 fields=['chunk_id', 'source_url', 'scheme', 'category', 'section', 'kind', 'fetched_at']"
+    },
+    {
+      "check": "stored_vectors_match_embeddings",
+      "passed": true,
+      "detail": "mismatched=0 dim=384"
+    },
+    {
+      "check": "store_settings_come_from_config",
+      "passed": true,
+      "detail": "space=cosine model=sentence-transformers/all-MiniLM-L6-v2 dir=chroma_db collection=hdfc_mf_faq"
+    }
+  ],
+  "preview": [
+    {
+      "chunk_id": "amfi-expense-ratio::sec::expense-ratio::1000",
+      "source_url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio",
+      "section": "Expense Ratio",
+      "text": "Under SEBI (Mutual Funds) Regulations, 1996, Mutual Funds are permitted to charge certain operating expenses for managing a mutual fund scheme – such as sales & marketing / adverti",
+      "vector_dim": 384
+    },
+    {
+      "chunk_id": "amfi-expense-ratio::sec::expense-ratio::1001",
+      "source_url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio",
+      "section": "Expense Ratio",
+      "text": "Currently, in India, the expense ratio is fungible, i.e., there is no limit on any particular type of allowed expense as long as the total expense ratio is within the prescribed li",
+      "vector_dim": 384
+    },
+    {
+      "chunk_id": "amfi-expense-ratio::sec::expense-ratio::1002",
+      "source_url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio",
+      "section": "Expense Ratio",
+      "text": "TER has a direct bearing on a scheme’s NAV – the lower the expense ratio of a scheme, the higher the NAV . Thus, TER is an important parameter while selecting a mutual fund scheme.",
+      "vector_dim": 384
+    }
+  ]
+}

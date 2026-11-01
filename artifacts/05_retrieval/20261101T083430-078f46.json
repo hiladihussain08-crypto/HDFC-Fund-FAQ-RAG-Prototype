@@ -1,0 +1,16 @@
+{
+  "query_id": "20261101T083430-078f46",
+  "timestamp": "2026-11-01T08:34:30Z",
+  "question": "How did the fund perform last year?",
+  "route": "refuse_returns",
+  "reason": "returns_or_performance",
+  "scheme": "",
+  "intent": "other",
+  "k": 5,
+  "min_score": 0.3,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "collection": "hdfc_mf_faq",
+  "hits": [],
+  "raw": [],
+  "retrieval_skipped": true
+}

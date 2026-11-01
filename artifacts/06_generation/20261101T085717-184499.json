@@ -1,0 +1,19 @@
+{
+  "query_id": "20261101T085717-184499",
+  "timestamp": "2026-11-01T08:57:17Z",
+  "question": "What is the expense ratio of SBI Bluechip Fund?",
+  "route": "miss",
+  "reason": "foreign_amc",
+  "mode": "policy_response",
+  "system_prompt": "",
+  "user_prompt": "",
+  "context_pack": [],
+  "raw_completion": "",
+  "answer": "That scheme isn't in the pages I loaded. I cover these HDFC schemes: HDFC Large Cap Fund, HDFC Flexi Cap Fund, HDFC ELSS Tax Saver Fund, HDFC Mid Cap Fund.",
+  "citation_url": "https://groww.in/mutual-funds/amc/hdfc-mutual-funds",
+  "last_updated": "Last updated from sources: 2026-11-01",
+  "provider": "",
+  "model": "",
+  "error": "",
+  "pii_redacted": false
+}

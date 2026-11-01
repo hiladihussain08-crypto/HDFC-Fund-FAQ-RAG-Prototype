@@ -1,0 +1,70 @@
+{
+  "phase": "03_embed_and_index",
+  "created_at": "2026-11-01T08:44:03Z",
+  "collection": "hdfc_mf_faq",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "space": "cosine",
+  "dim": 384,
+  "chunks": 129,
+  "collection_count": 129,
+  "passed": true,
+  "checks": [
+    {
+      "check": "collection_count_equals_chunks",
+      "passed": true,
+      "detail": "chroma=129 chunks=129"
+    },
+    {
+      "check": "every_embedded_chunk_indexed",
+      "passed": true,
+      "detail": "missing=0"
+    },
+    {
+      "check": "vectors_are_expected_dim",
+      "passed": true,
+      "detail": "expected=384 found=[384]"
+    },
+    {
+      "check": "distance_space_is_config",
+      "passed": true,
+      "detail": "collection=cosine config=cosine"
+    },
+    {
+      "check": "every_row_keeps_citation",
+      "passed": true,
+      "detail": "rows_without_url=0"
+    },
+    {
+      "check": "sanity_query_hits_expected_chunk",
+      "passed": true,
+      "detail": "query='expense ratio ELSS' top3=['groww-elss::fact::expense-ratio', 'amfi-expense-ratio::sec::expense-ratio::1000', 'groww-mid-cap::fact::expense-ratio']"
+    }
+  ],
+  "sanity_query": {
+    "query": "expense ratio ELSS",
+    "top_k": 3,
+    "hits": [
+      {
+        "chunk_id": "groww-elss::fact::expense-ratio",
+        "score": 0.5916,
+        "scheme": "groww-elss",
+        "heading": "Expense ratio",
+        "url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth"
+      },
+      {
+        "chunk_id": "amfi-expense-ratio::sec::expense-ratio::1000",
+        "score": 0.5227,
+        "scheme": "",
+        "heading": "Expense Ratio",
+        "url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio"
+      },
+      {
+        "chunk_id": "groww-mid-cap::fact::expense-ratio",
+        "score": 0.4735,
+        "scheme": "groww-mid-cap",
+        "heading": "Expense ratio",
+        "url": "https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth"
+      }
+    ]
+  }
+}

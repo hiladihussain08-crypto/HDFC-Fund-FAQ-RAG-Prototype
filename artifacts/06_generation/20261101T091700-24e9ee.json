@@ -1,0 +1,70 @@
+{
+  "query_id": "20261101T091700-24e9ee",
+  "timestamp": "2026-11-01T09:17:00Z",
+  "question": "What is the riskometer level of HDFC ELSS Tax Saver Fund?",
+  "route": "answer",
+  "reason": "factual",
+  "mode": "extractive_fallback",
+  "system_prompt": "You are the Groww Mutual Fund FAQ Assistant, a facts-only retrieval assistant for four HDFC Mutual Fund schemes and Groww/SEBI/AMFI help pages.\n\nRULES\n1. Identify the exact fact the user asks: expense ratio, exit load, minimum SIP or lump-sum, lock-in, riskometer, benchmark, fund manager, AUM, category, launch date, stamp duty, or how to download a statement.\n2. Answer in at most 3 short sentences. No bullets, no markdown, no headings.\n3. Use ONLY the facts in CONTEXT. Never guess, infer, or use outside knowledge.\n4. Never give investment advice, recommendations, rankings, or opinions.\n5. Never compute, compare, or quote returns, CAGR, NAV, or performance.\n6. If CONTEXT does not contain the exact fact, output exactly: NOT_IN_CONTEXT\n7. Do not include URLs, source lines, or last-updated lines. The application adds exactly one citation.\n8. If the question names a scheme, use only that scheme's facts. Never mix schemes.\n9. For statement questions, give the concrete steps found in CONTEXT.\n",
+  "user_prompt": "QUESTION: What is the riskometer level of HDFC ELSS Tax Saver Fund?\n\nCONTEXT:\n[1] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Riskometer (similarity 0.85)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Riskometer risk level: Moderately High.\n\n[2] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Stamp duty (similarity 0.76)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Stamp duty: 0.005% (from July 1st, 2020).\n\n[3] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Minimum investment (similarity 0.73)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Minimum lump-sum investment: ₹500.\n\n[4] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Fund house (similarity 0.73)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Fund house: HDFC Mutual Fund.\n\n[5] HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio | Minimum additional investment (similarity 0.73)\nHDFC ELSS Tax Saver Fund Direct Plan Growth — Minimum additional investment: ₹500.\n\nANSWER (max 3 sentences, facts from CONTEXT only):",
+  "context_pack": [
+    {
+      "index": 1,
+      "chunk_id": "groww-elss::fact::riskometer",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Riskometer",
+      "kind": "fact",
+      "score": 0.853,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Riskometer risk level: Moderately High."
+    },
+    {
+      "index": 2,
+      "chunk_id": "groww-elss::fact::stamp-duty",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Stamp duty",
+      "kind": "fact",
+      "score": 0.7599,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Stamp duty: 0.005% (from July 1st, 2020)."
+    },
+    {
+      "index": 3,
+      "chunk_id": "groww-elss::fact::minimum-lumpsum",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Minimum investment",
+      "kind": "fact",
+      "score": 0.7347,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Minimum lump-sum investment: ₹500."
+    },
+    {
+      "index": 4,
+      "chunk_id": "groww-elss::fact::fund-house",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Fund house",
+      "kind": "fact",
+      "score": 0.7315,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Fund house: HDFC Mutual Fund."
+    },
+    {
+      "index": 5,
+      "chunk_id": "groww-elss::fact::minimum-additional",
+      "source_title": "HDFC ELSS Tax Saver Fund Direct Plan Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+      "heading": "Minimum additional investment",
+      "kind": "fact",
+      "score": 0.731,
+      "text": "HDFC ELSS Tax Saver Fund Direct Plan Growth — Minimum additional investment: ₹500."
+    }
+  ],
+  "raw_completion": "",
+  "answer": "The riskometer level shown for HDFC ELSS Tax Saver Fund Direct Plan Growth is Moderately High.",
+  "citation_url": "https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth",
+  "last_updated": "2026-11-01",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "error": "missing_api_key (GROQ_API_KEY)",
+  "used_chunk_id": "groww-elss::fact::riskometer"
+}

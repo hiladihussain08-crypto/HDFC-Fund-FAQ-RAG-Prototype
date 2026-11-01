@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fund FAQ assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#F6F8FA; --surface:#FFFFFF; --border:#E4E8EE;
+    --text:#0B1B2B; --text-2:#5A6678; --brand:#00A67E;
+    --ok:#00A67E; --ok-bg:#E6F6F0; --warn:#E8890C; --warn-bg:#FEF3E2;
+    --neutral:#6B7A90; --neutral-bg:#EEF1F5; --err:#D92D20; --err-bg:#FDECEA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0A1220; --surface:#121C2E; --border:#233048;
+      --text:#E8EDF4; --text-2:#9AA7BB; --brand:#2DD4A4;
+      --ok:#2DD4A4; --ok-bg:#0F2E26; --warn:#F5A623; --warn-bg:#2E2410;
+      --neutral:#9AA7BB; --neutral-bg:#1A2538; --err:#F06A5B; --err-bg:#2E1614;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:'Inter',sans-serif; font-size:15px; background:var(--bg); color:var(--text); }
+  .wrap { max-width:760px; margin:0 auto; padding:24px 20px 120px; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 0 16px; border-bottom:1px solid var(--border); margin-bottom:24px; }
+  .logo { width:32px;height:32px;border-radius:8px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px; }
+  .title { font-size:18px;font-weight:600; }
+  .pill { display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface);font-size:12px;color:var(--text-2); }
+  .pill .shield { color:var(--brand); }
+  .warning { background:var(--warn-bg); color:var(--warn); border:1px solid var(--warn); border-radius:12px; padding:10px 14px; font-size:13px; margin-bottom:16px; }
+  .welcome { text-align:center; padding:48px 0 24px; }
+  .welcome h2 { font-size:22px; font-weight:600; margin:0 0 8px; }
+  .welcome p { font-size:15px; color:var(--text-2); margin:0; }
+  .starters { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:24px; }
+  .starter { border:1px solid var(--border); background:var(--surface); border-radius:999px; padding:8px 14px; font-size:13px; cursor:pointer; color:var(--text); }
+  .starter:hover { border-color:var(--brand); color:var(--brand); }
+  .msg { margin:12px 0; }
+  .msg.user { text-align:right; }
+  .bubble { display:inline-block; max-width:80%; padding:10px 14px; border-radius:16px 16px 4px 16px; background:var(--text); color:#fff; }
+  .msg.assistant .card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; margin:4px 0 8px; animation:fadeIn 200ms ease both; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+  .status { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:500; border:1px solid; margin-bottom:8px; }
+  .status .dot { width:6px;height:6px;border-radius:50%; }
+  .status.ok { color:var(--ok); background:var(--ok-bg); border-color:var(--ok); } .status.ok .dot{background:var(--ok);}
+  .status.warn { color:var(--warn); background:var(--warn-bg); border-color:var(--warn); } .status.warn .dot{background:var(--warn);}
+  .status.neutral { color:var(--neutral); background:var(--neutral-bg); border-color:var(--neutral); } .status.neutral .dot{background:var(--neutral);}
+  .status.err { color:var(--err); background:var(--err-bg); border-color:var(--err); } .status.err .dot{background:var(--err);}
+  .hero-row { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+  .hero-block { display:flex; flex-direction:column; }
+  .hero-label { font-size:12px; color:var(--text-2); margin-bottom:2px; }
+  .hero-number { font-size:32px; font-weight:600; line-height:1; }
+  .hero-secondary { font-size:13px; color:var(--text-2); padding-bottom:4px; }
+  .answer-text { font-size:15px; line-height:1.6; }
+  .source-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:8px 0 4px; font-size:12px; color:var(--text-2); }
+  .domain-chip { display:inline-flex; padding:3px 8px; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--brand); text-decoration:none; font-weight:500; }
+  .meta { font-size:12px; color:var(--text-2); margin-top:4px; }
+  .composer { position:fixed; bottom:0; left:0; right:0; padding:12px; background:var(--bg); }
+  .composer-inner { max-width:760px; margin:0 auto; display:flex; gap:8px; }
+  .composer input { flex:1; padding:12px 16px; border-radius:999px; border:1px solid var(--border); background:var(--surface); font-size:15px; color:var(--text); outline:none; }
+  .composer button { background:var(--brand); color:#fff; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer; font-size:18px; }
+  .composer-caption { text-align:center; font-size:11px; color:var(--text-2); margin-top:6px; }
+  .typing { display:inline-flex; gap:4px; padding:12px 16px; }
+  .typing span { width:6px;height:6px;border-radius:50%; background:var(--text-2); animation:typing 1.2s infinite; }
+  .typing span:nth-child(2){animation-delay:.2s} .typing span:nth-child(3){animation-delay:.4s}
+  @keyframes typing { 0%,80%,100%{transform:scale(.6);opacity:.4} 40%{transform:scale(1);opacity:1} }
+  details { border:1px solid var(--border); border-radius:8px; padding:4px 8px; background:var(--surface); margin:4px 0; }
+  details summary { cursor:pointer; font-size:12px; color:var(--text-2); font-weight:500; }
+  .chip-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .chip { border:1px solid var(--border); background:var(--surface); border-radius:999px; padding:6px 12px; font-size:13px; cursor:pointer; color:var(--text); }
+  .chip:hover { border-color:var(--brand); color:var(--brand); }
+  @media (prefers-reduced-motion: reduce) { .card, .typing span { animation:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="logo">F</div>
+      <div class="title">Fund FAQ assistant</div>
+    </div>
+    <span class="pill"><span class="shield">🛡</span> Facts only, no advice</span>
+  </header>
+
+  <div class="warning">This prototype answers only from official fund pages. It is not investment advice and does not compute or compare returns.</div>
+
+  <div id="welcome" class="welcome">
+    <h2>Ask about any mutual fund</h2>
+    <p>Factual answers from official fund pages, with one citation per answer.</p>
+    <div class="starters">
+      <button class="starter" data-q="What is the expense ratio of HDFC Large Cap Fund Direct Growth?">Expense ratio</button>
+      <button class="starter" data-q="What is the exit load of HDFC Large Cap Fund Direct Growth?">Exit load</button>
+      <button class="starter" data-q="What is the minimum SIP for HDFC Large Cap Fund Direct Growth?">Minimum SIP</button>
+      <button class="starter" data-q="Who is the fund manager of HDFC Large Cap Fund Direct Growth?">Fund manager</button>
+    </div>
+  </div>
+
+  <div id="chat"></div>
+</div>
+
+<div class="composer">
+  <div class="composer-inner">
+    <input id="q" type="text" placeholder="Ask about expense ratio, exit load, SIP…" />
+    <button id="send">➤</button>
+  </div>
+  <div class="composer-caption">Facts from public fund pages. Not investment advice.</div>
+</div>
+
+<script>
+const chat = document.getElementById('chat');
+const welcome = document.getElementById('welcome');
+const q = document.getElementById('q');
+const send = document.getElementById('send');
+
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function statusChip(route){
+  if(route==='answer') return '<span class="status ok"><span class="dot"></span>Factual answer</span>';
+  if(route && route.startsWith('refuse')) return '<span class="status warn"><span class="dot"></span>I can\'t advise on that</span>';
+  if(route==='miss') return '<span class="status neutral"><span class="dot"></span>Not in my data</span>';
+  return '<span class="status err"><span class="dot"></span>Something went wrong</span>';
+}
+
+function domainOf(url){ try { return new URL(url).hostname; } catch(e){ return url; } }
+
+function fmtUpdated(s){
+  const m = (s||'').match(/(\d{4})-(\d{2})-(\d{2})/);
+  if(!m) return s;
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return 'Updated ' + parseInt(m[3]) + ' ' + months[parseInt(m[2])-1] + ' ' + m[1];
+}
+
+function renderAssistant(r){
+  const wrap = document.createElement('div');
+  wrap.className = 'msg assistant';
+  let html = statusChip(r.route) + '<div class="card">';
+  // hero number
+  const heroMatch = (r.answer||'').match(/(₹\s?[\d,]+(?:\.\d+)?|\d[\d,]*\.?\d*\s*%)/);
+  if(r.route==='answer' && heroMatch){
+    const hero = heroMatch[0].trim();
+    const pm = (r.answer||'').match(/\(([^)]+)\)/);
+    const sec = pm ? pm[1].trim() : '';
+    const label = (r.intent||'').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+    html += '<div class="hero-row"><div class="hero-block"><div class="hero-label">'+label+'</div><div class="hero-number">'+hero+'</div></div>';
+    if(sec) html += '<div class="hero-secondary">'+escapeHtml(sec)+'</div>';
+    html += '</div>';
+  }
+  html += '<div class="answer-text"><p>'+escapeHtml(r.answer||'')+'</p></div></div>';
+  if(r.citation_url){
+    html += '<div class="source-row"><a class="domain-chip" href="'+r.citation_url+'" target="_blank" rel="noopener noreferrer">'+domainOf(r.citation_url)+'</a><span>'+fmtUpdated(r.last_updated)+'</span></div>';
+  }
+  html += '<div class="meta">mode='+(r.generation&&r.generation.mode||'policy')+' · intent='+(r.intent||'')+' · '+(r.latency_ms||0)+' ms · query_id='+(r.query_id||'')+'</div>';
+  // follow-up chips
+  if(r.route==='answer' && r.scheme){
+    const chips = (r.intent==='expense_ratio')?['Exit load','Minimum SIP','Fund manager']:
+      (r.intent==='exit_load')?['Expense ratio','Minimum SIP','Fund manager']:
+      ['Expense ratio','Exit load','Minimum SIP'];
+    html += '<div class="chip-row">' + chips.map(c=>'<button class="chip" data-chip="'+c+'">'+c+'</button>').join('') + '</div>';
+  }
+  wrap.innerHTML = html;
+  chat.appendChild(wrap);
+  // attach chip handlers
+  wrap.querySelectorAll('.chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const chip = btn.getAttribute('data-chip');
+      const topic = chip.toLowerCase();
+      // fund name from answer: "of X is/for"
+      const m = (r.answer||'').match(/of (.+?) (?:is|was|has)/i);
+      const fund = m ? m[1].trim() : 'HDFC Large Cap Fund Direct Growth';
+      askQuestion('What is the '+topic+' of '+fund+'?');
+    });
+  });
+}
+
+async function askQuestion(text){
+  if(!text.trim()) return;
+  if(welcome) welcome.style.display='none';
+  const u = document.createElement('div'); u.className='msg user';
+  u.innerHTML = '<span class="bubble">'+escapeHtml(text)+'</span>';
+  chat.appendChild(u);
+  // typing indicator
+  const t = document.createElement('div'); t.className='msg assistant';
+  t.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+  chat.appendChild(t);
+  q.value='';
+  try {
+    const res = await fetch('/api/ask', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({question:text}) });
+    const data = await res.json();
+    t.remove();
+    renderAssistant(data);
+  } catch(e){
+    t.remove();
+    const w = document.createElement('div'); w.className='msg assistant';
+    w.innerHTML = '<span class="status err"><span class="dot"></span>Something went wrong</span><div class="card"><div class="answer-text"><p>Could not reach the server. Try again in a moment.</p></div></div>';
+    chat.appendChild(w);
+  }
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+send.addEventListener('click', ()=>askQuestion(q.value));
+q.addEventListener('keydown', e=>{ if(e.key==='Enter') askQuestion(q.value); });
+document.querySelectorAll('.starter').forEach(b=> b.addEventListener('click', ()=> askQuestion(b.getAttribute('data-q'))));
+</script>
+</body>
+</html>

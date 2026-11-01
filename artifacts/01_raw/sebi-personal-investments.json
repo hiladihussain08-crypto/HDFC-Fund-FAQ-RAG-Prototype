@@ -1,0 +1,15 @@
+{
+  "id": "sebi-personal-investments",
+  "url": "https://investor.sebi.gov.in/personalinvestments.html",
+  "final_url": "https://investor.sebi.gov.in/personalinvestments.html",
+  "category": "Investor education",
+  "title": "Personal Finance and Investment",
+  "scheme": "",
+  "doc_type": "regulator",
+  "fetched_at": "2026-11-01T07:18:31Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\sebi-personal-investments.html",
+  "content_bytes": 9538
+}

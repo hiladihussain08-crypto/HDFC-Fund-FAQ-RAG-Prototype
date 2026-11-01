@@ -1,0 +1,15 @@
+{
+  "id": "amfi-expense-ratio",
+  "url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio",
+  "final_url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio",
+  "category": "Investor education",
+  "title": "Expense Ratio",
+  "scheme": "",
+  "doc_type": "amc_education",
+  "fetched_at": "2026-11-01T07:18:34Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\amfi-expense-ratio.html",
+  "content_bytes": 179380
+}

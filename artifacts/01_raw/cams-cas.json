@@ -1,0 +1,15 @@
+{
+  "id": "cams-cas",
+  "url": "https://www.camsonline.com/Investors/Statements/Consolidated-Account-Statement",
+  "final_url": "https://www.camsonline.com/Investors/Statements/Consolidated-Account-Statement",
+  "category": "RTA / statements",
+  "title": "Consolidated Account Statement - CAMS",
+  "scheme": "",
+  "doc_type": "rta",
+  "fetched_at": "2026-11-01T07:18:35Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\cams-cas.html",
+  "content_bytes": 11815
+}

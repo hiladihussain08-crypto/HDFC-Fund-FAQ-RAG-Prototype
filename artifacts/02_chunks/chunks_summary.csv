@@ -1,0 +1,116 @@
+source_id,source_url,section,kind,chunks,chars
+amfi-expense-ratio,https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio,Expense Ratio,section,3,1803
+amfi-risks,https://www.amfiindia.com/investor/knowledge-center-info?zoneName=riskInMutualFunds,STANDARD RISK FACTORS,section,2,962
+amfi-risks,https://www.amfiindia.com/investor/knowledge-center-info?zoneName=riskInMutualFunds,Risks associated with investments in Equities,section,2,1139
+amfi-risks,https://www.amfiindia.com/investor/knowledge-center-info?zoneName=riskInMutualFunds,Risks Associated with investment in Debt Securities and Money Market Instruments,section,9,5251
+groww-amc-hdfc,https://groww.in/mutual-funds/amc/hdfc-mutual-funds,HDFC Mutual Fund,section,1,662
+groww-amc-hdfc,https://groww.in/mutual-funds/amc/hdfc-mutual-funds,Key information about HDFC Mutual Fund,section,1,835
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Expense ratio,fact,1,100
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Exit load,fact,1,61
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Minimum SIP,fact,1,90
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Minimum investment,fact,1,80
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Lock-in,fact,1,63
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Riskometer,fact,1,85
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Benchmark,fact,1,102
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Fund manager,fact,1,75
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Assets under management,fact,1,94
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Scheme objective,fact,1,205
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Fund house,fact,1,75
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Category and plan,fact,1,91
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Launch date,fact,1,71
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Stamp duty,fact,1,87
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Minimum additional investment,fact,1,82
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Scheme snapshot,fact,1,368
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Expense ratio,section,1,203
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Tax,section,1,252
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Exit load,section,1,149
+groww-elss,https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth,Stamp duty,section,1,71
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Expense ratio,fact,1,90
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Exit load,fact,1,89
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Minimum SIP,fact,1,80
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Minimum investment,fact,1,70
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Lock-in,fact,1,56
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Riskometer,fact,1,75
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Benchmark,fact,1,92
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Fund manager,fact,1,64
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Assets under management,fact,1,85
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Scheme objective,fact,1,193
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Fund house,fact,1,65
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Category and plan,fact,1,86
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Launch date,fact,1,61
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Stamp duty,fact,1,77
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Minimum additional investment,fact,1,72
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Scheme snapshot,fact,1,404
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Expense ratio,section,1,203
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Tax,section,1,252
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Exit load,section,1,149
+groww-flexi-cap,https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth,Stamp duty,section,1,71
+groww-help-cas-cams,https://groww.in/help/mutual-funds/mf-track-and-switch/how-to-generate-my-consolidated-account-statement--cas--from-the-cams-website--60,How do I generate my Consolidated Account Statement (CAS) from CAMS?,section,1,561
+groww-help-elss-report,https://groww.in/help/mutual-funds/order/how-to-download-tax-statement--for-elss--77,What is a mutual funds ELSS report?,section,1,119
+groww-help-pnl-statement,https://groww.in/help/my-account/ma-others/where-can-i-get-the-profit-loss-statement-for-tax,Where can I get the Profit/Loss statement for tax?,section,1,168
+groww-help-tax-proof-80c,https://groww.in/help/my-account/ma-others/where-can-i-get-the-tax-proof-for-section-80c,Where can I get the tax proof for section 80C?,section,1,145
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Expense ratio,fact,1,90
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Exit load,fact,1,89
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Minimum SIP,fact,1,80
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Minimum investment,fact,1,70
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Lock-in,fact,1,56
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Riskometer,fact,1,75
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Benchmark,fact,1,92
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Fund manager,fact,1,64
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Assets under management,fact,1,84
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Scheme objective,fact,1,170
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Fund house,fact,1,65
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Category and plan,fact,1,86
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Launch date,fact,1,61
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Stamp duty,fact,1,77
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Minimum additional investment,fact,1,72
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Scheme snapshot,fact,1,403
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Expense ratio,section,1,203
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Tax,section,1,252
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Exit load,section,1,149
+groww-large-cap,https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth,Stamp duty,section,1,71
+groww-learn-capital-gains,https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments,How To Get Capital Gains Statement For Mutual Fund Investments?,section,1,439
+groww-learn-capital-gains,https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments,How to Download Capital Gains Statement for Mutual Funds?,section,1,139
+groww-learn-capital-gains,https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments,Online Investment Platforms,section,1,579
+groww-learn-capital-gains,https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments,CAMS and KFin Technologies Limited,section,3,2054
+groww-learn-capital-gains,https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments,Mutual Fund Companies,section,1,591
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Expense ratio,fact,1,88
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Exit load,fact,1,88
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Minimum SIP,fact,1,78
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Minimum investment,fact,1,68
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Lock-in,fact,1,54
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Riskometer,fact,1,73
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Benchmark,fact,1,104
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Fund manager,fact,1,64
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Assets under management,fact,1,83
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Scheme objective,fact,1,166
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Fund house,fact,1,63
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Category and plan,fact,1,82
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Launch date,fact,1,59
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Stamp duty,fact,1,75
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Minimum additional investment,fact,1,70
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Scheme snapshot,fact,1,417
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Expense ratio,section,1,203
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Tax,section,1,252
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Exit load,section,1,149
+groww-mid-cap,https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth,Stamp duty,section,1,71
+mfsahihai-home,https://www.mutualfundssahihai.com/en,Mutual Funds Simplified.,section,1,48
+mfsahihai-home,https://www.mutualfundssahihai.com/en,Plan Your Investment Smartly,section,1,470
+mfsahihai-home,https://www.mutualfundssahihai.com/en,Mutual Fund Investment for Beginners,section,1,139
+mfsahihai-home,https://www.mutualfundssahihai.com/en,Mutual Fund Investment for Informed Investors,section,1,105
+mfsahihai-home,https://www.mutualfundssahihai.com/en,Watch and Learn,section,1,103
+mfsahihai-home,https://www.mutualfundssahihai.com/en,Frequently Asked Questions,section,1,183
+sebi-cas,https://investor.sebi.gov.in/consolidated_account_statement.html,:: Topic of Interest | Consolidated Account Statement | SEBI Investor ::,section,1,48
+sebi-cas,https://investor.sebi.gov.in/consolidated_account_statement.html,Consolidated Account Statement,section,1,380
+sebi-investor-home,https://investor.sebi.gov.in/,Money Matters : Lets Understand,section,1,71
+sebi-investor-home,https://investor.sebi.gov.in/,Investment : Avenue To Grow Your Money,section,1,79
+sebi-investor-home,https://investor.sebi.gov.in/,Securities Market Investment : Lets Learn,section,1,86
+sebi-investor-home,https://investor.sebi.gov.in/,Samajh Se Investing Simple,section,1,124
+sebi-investor-home,https://investor.sebi.gov.in/,How jagrook are you?,section,1,111
+sebi-investor-home,https://investor.sebi.gov.in/,Topics of Interest,section,1,517
+sebi-personal-investments,https://investor.sebi.gov.in/personalinvestments.html,:: Personal Finance & Investment : Investments : Lets Understand | SEBI Investor,section,1,43
+sebi-personal-investments,https://investor.sebi.gov.in/personalinvestments.html,What You Will Learn,section,1,376
+sebi-personal-investments,https://investor.sebi.gov.in/personalinvestments.html,Who it is for,section,1,230
+sebi-personal-investments,https://investor.sebi.gov.in/personalinvestments.html,Core concepts Covered,section,1,487
+sebi-secure-account,https://investor.sebi.gov.in/secure_ur_inv_account.html,:: Topic of Interest | Secure Your Investment Account | SEBI Investor ::,section,1,48
+sebi-secure-account,https://investor.sebi.gov.in/secure_ur_inv_account.html,Secure Your Investment Account,section,1,655

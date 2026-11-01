@@ -1,0 +1,19 @@
+{
+  "query_id": "20261101T082241-3c6923",
+  "timestamp": "2026-11-01T08:22:41Z",
+  "question": "Should I invest 5 lakh in ELSS for tax saving?",
+  "route": "refuse_advice",
+  "reason": "advice_or_ranking",
+  "mode": "policy_response",
+  "system_prompt": "",
+  "user_prompt": "",
+  "context_pack": [],
+  "raw_completion": "",
+  "answer": "I can only share factual information about the schemes covered here, so I can't recommend whether to buy, sell, or hold. For general investor education, see the SEBI Investor Education page.",
+  "citation_url": "https://investor.sebi.gov.in/",
+  "last_updated": "Last updated from sources: 2026-11-01",
+  "provider": "",
+  "model": "",
+  "error": "",
+  "pii_redacted": false
+}

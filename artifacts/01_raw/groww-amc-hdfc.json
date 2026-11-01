@@ -1,0 +1,15 @@
+{
+  "id": "groww-amc-hdfc",
+  "url": "https://groww.in/mutual-funds/amc/hdfc-mutual-funds",
+  "final_url": "https://groww.in/mutual-funds/amc/hdfc-mutual-funds",
+  "category": "AMC overview",
+  "title": "HDFC Mutual Fund",
+  "scheme": "",
+  "doc_type": "amc_overview",
+  "fetched_at": "2026-11-01T07:18:25Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\groww-amc-hdfc.html",
+  "content_bytes": 249942
+}

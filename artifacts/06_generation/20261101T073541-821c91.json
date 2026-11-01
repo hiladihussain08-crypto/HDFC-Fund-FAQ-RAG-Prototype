@@ -1,0 +1,19 @@
+{
+  "query_id": "20261101T073541-821c91",
+  "timestamp": "2026-11-01T07:35:41Z",
+  "question": "What is the expense ratio of HDFC Small Cap Fund?",
+  "route": "miss",
+  "reason": "uncovered_hdfc_scheme",
+  "mode": "policy_response",
+  "system_prompt": "",
+  "user_prompt": "",
+  "context_pack": [],
+  "raw_completion": "",
+  "answer": "That HDFC scheme isn't in the pages I loaded. I cover: HDFC Large Cap Fund, HDFC Flexi Cap Fund, HDFC ELSS Tax Saver Fund, HDFC Mid Cap Fund.",
+  "citation_url": "https://groww.in/mutual-funds/amc/hdfc-mutual-funds",
+  "last_updated": "Last updated from sources: 2026-11-01",
+  "provider": "",
+  "model": "",
+  "error": "",
+  "pii_redacted": false
+}

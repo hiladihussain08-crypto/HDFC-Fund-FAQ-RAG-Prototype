@@ -1,0 +1,102 @@
+{
+  "phase": "04_chunking",
+  "strategy": "heading_then_recursive",
+  "max_chars": 900,
+  "overlap_chars": 120,
+  "min_chars": 40,
+  "max_tokens": 256,
+  "chunks": 129,
+  "summary_rows": 115,
+  "per_source": {
+    "amfi-expense-ratio": {
+      "facts": 0,
+      "sections": 3,
+      "total": 3
+    },
+    "amfi-investor-corner": {
+      "facts": 0,
+      "sections": 0,
+      "total": 0
+    },
+    "amfi-risks": {
+      "facts": 0,
+      "sections": 13,
+      "total": 13
+    },
+    "groww-amc-hdfc": {
+      "facts": 0,
+      "sections": 2,
+      "total": 2
+    },
+    "groww-elss": {
+      "facts": 16,
+      "sections": 4,
+      "total": 20
+    },
+    "groww-flexi-cap": {
+      "facts": 16,
+      "sections": 4,
+      "total": 20
+    },
+    "groww-help-cas-cams": {
+      "facts": 0,
+      "sections": 1,
+      "total": 1
+    },
+    "groww-help-elss-report": {
+      "facts": 0,
+      "sections": 1,
+      "total": 1
+    },
+    "groww-help-pnl-statement": {
+      "facts": 0,
+      "sections": 1,
+      "total": 1
+    },
+    "groww-help-tax-proof-80c": {
+      "facts": 0,
+      "sections": 1,
+      "total": 1
+    },
+    "groww-large-cap": {
+      "facts": 16,
+      "sections": 4,
+      "total": 20
+    },
+    "groww-learn-capital-gains": {
+      "facts": 0,
+      "sections": 7,
+      "total": 7
+    },
+    "groww-mid-cap": {
+      "facts": 16,
+      "sections": 4,
+      "total": 20
+    },
+    "mfsahihai-home": {
+      "facts": 0,
+      "sections": 6,
+      "total": 6
+    },
+    "sebi-cas": {
+      "facts": 0,
+      "sections": 2,
+      "total": 2
+    },
+    "sebi-investor-home": {
+      "facts": 0,
+      "sections": 6,
+      "total": 6
+    },
+    "sebi-personal-investments": {
+      "facts": 0,
+      "sections": 4,
+      "total": 4
+    },
+    "sebi-secure-account": {
+      "facts": 0,
+      "sections": 2,
+      "total": 2
+    }
+  }
+}

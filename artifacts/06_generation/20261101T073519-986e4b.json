@@ -1,0 +1,70 @@
+{
+  "query_id": "20261101T073519-986e4b",
+  "timestamp": "2026-11-01T07:35:19Z",
+  "question": "What is the expense ratio of HDFC Large Cap Fund Direct Growth?",
+  "route": "answer",
+  "reason": "factual",
+  "mode": "extractive_fallback",
+  "system_prompt": "You are the Groww Mutual Fund FAQ Assistant, a facts-only retrieval assistant for four HDFC Mutual Fund schemes and Groww/SEBI/AMFI help pages.\n\nRULES\n1. Identify the exact fact the user asks: expense ratio, exit load, minimum SIP or lump-sum, lock-in, riskometer, benchmark, fund manager, AUM, category, launch date, stamp duty, or how to download a statement.\n2. Answer in at most 3 short sentences. No bullets, no markdown, no headings.\n3. Use ONLY the facts in CONTEXT. Never guess, infer, or use outside knowledge.\n4. Never give investment advice, recommendations, rankings, or opinions.\n5. Never compute, compare, or quote returns, CAGR, NAV, or performance.\n6. If CONTEXT does not contain the exact fact, output exactly: NOT_IN_CONTEXT\n7. Do not include URLs, source lines, or last-updated lines. The application adds exactly one citation.\n8. If the question names a scheme, use only that scheme's facts. Never mix schemes.\n9. For statement questions, give the concrete steps found in CONTEXT.\n",
+  "user_prompt": "QUESTION: What is the expense ratio of HDFC Large Cap Fund Direct Growth?\n\nCONTEXT:\n[1] HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio | Expense ratio (similarity 0.90)\nHDFC Large Cap Fund Direct Growth — Expense ratio (TER): 1.02%. Base expense ratio: 0.84%.\n\n[2] HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio | Category and plan (similarity 0.84)\nHDFC Large Cap Fund Direct Growth — Category: Equity - Large Cap. Plan: Direct Growth.\n\n[3] HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio | Minimum additional investment (similarity 0.83)\nHDFC Large Cap Fund Direct Growth — Minimum additional investment: ₹100.\n\n[4] HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio | Fund house (similarity 0.83)\nHDFC Large Cap Fund Direct Growth — Fund house: HDFC Mutual Fund.\n\n[5] HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio | Minimum investment (similarity 0.82)\nHDFC Large Cap Fund Direct Growth — Minimum lump-sum investment: ₹100.\n\nANSWER (max 3 sentences, facts from CONTEXT only):",
+  "context_pack": [
+    {
+      "index": 1,
+      "chunk_id": "groww-large-cap::fact::expense-ratio",
+      "source_title": "HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth",
+      "heading": "Expense ratio",
+      "kind": "fact",
+      "score": 0.9049,
+      "text": "HDFC Large Cap Fund Direct Growth — Expense ratio (TER): 1.02%. Base expense ratio: 0.84%."
+    },
+    {
+      "index": 2,
+      "chunk_id": "groww-large-cap::fact::category",
+      "source_title": "HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth",
+      "heading": "Category and plan",
+      "kind": "fact",
+      "score": 0.8439,
+      "text": "HDFC Large Cap Fund Direct Growth — Category: Equity - Large Cap. Plan: Direct Growth."
+    },
+    {
+      "index": 3,
+      "chunk_id": "groww-large-cap::fact::minimum-additional",
+      "source_title": "HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth",
+      "heading": "Minimum additional investment",
+      "kind": "fact",
+      "score": 0.8282,
+      "text": "HDFC Large Cap Fund Direct Growth — Minimum additional investment: ₹100."
+    },
+    {
+      "index": 4,
+      "chunk_id": "groww-large-cap::fact::fund-house",
+      "source_title": "HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth",
+      "heading": "Fund house",
+      "kind": "fact",
+      "score": 0.8262,
+      "text": "HDFC Large Cap Fund Direct Growth — Fund house: HDFC Mutual Fund."
+    },
+    {
+      "index": 5,
+      "chunk_id": "groww-large-cap::fact::minimum-lumpsum",
+      "source_title": "HDFC Large Cap Fund Direct Growth - NAV, Mutual Fund Performance & Portfolio",
+      "source_url": "https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth",
+      "heading": "Minimum investment",
+      "kind": "fact",
+      "score": 0.8175,
+      "text": "HDFC Large Cap Fund Direct Growth — Minimum lump-sum investment: ₹100."
+    }
+  ],
+  "raw_completion": "",
+  "answer": "The expense ratio of HDFC Large Cap Fund Direct Growth is 1.02% (base expense ratio 0.84%).",
+  "citation_url": "https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth",
+  "last_updated": "2026-11-01",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "error": "missing_api_key (GROQ_API_KEY)",
+  "used_chunk_id": "groww-large-cap::fact::expense-ratio"
+}

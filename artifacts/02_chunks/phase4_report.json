@@ -1,0 +1,42 @@
+{
+  "phase": "04_chunking",
+  "created_at": "2026-11-01T08:21:39Z",
+  "strategy": "heading_then_recursive",
+  "max_chars": 900,
+  "overlap_chars": 120,
+  "max_tokens": 256,
+  "chunks": 129,
+  "passed": true,
+  "checks": [
+    {
+      "check": "every_chunk_has_source_url",
+      "passed": true,
+      "detail": "missing=0 chunks=129"
+    },
+    {
+      "check": "metadata_covers_every_chunk",
+      "passed": true,
+      "detail": "incomplete=0"
+    },
+    {
+      "check": "no_chunk_over_max_chars",
+      "passed": true,
+      "detail": "max_chars=900 over=0"
+    },
+    {
+      "check": "token_count_within_model_window",
+      "passed": true,
+      "detail": "max_tokens=256 over=0"
+    },
+    {
+      "check": "fact_strips_are_self_contained",
+      "passed": true,
+      "detail": "bare=0"
+    },
+    {
+      "check": "no_returns_or_performance_tables",
+      "passed": true,
+      "detail": "leaked=0"
+    }
+  ]
+}

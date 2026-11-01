@@ -1,0 +1,16 @@
+{
+  "query_id": "20261101T072431-f3f4a3",
+  "timestamp": "2026-11-01T07:24:31Z",
+  "question": "What is the exit load if I redeem within 1 year?",
+  "route": "miss",
+  "reason": "missing_scheme",
+  "scheme": "",
+  "intent": "exit_load",
+  "k": 5,
+  "min_score": 0.3,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "collection": "hdfc_mf_faq",
+  "hits": [],
+  "raw": [],
+  "retrieval_skipped": true
+}

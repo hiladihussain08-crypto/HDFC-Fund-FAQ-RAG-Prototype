@@ -1,0 +1,70 @@
+{
+  "query_id": "20261101T072613-7ab104",
+  "timestamp": "2026-11-01T07:26:13Z",
+  "question": "How do I download my capital gains statement?",
+  "route": "answer",
+  "reason": "factual",
+  "mode": "extractive_fallback",
+  "system_prompt": "You are the Groww Mutual Fund FAQ Assistant, a facts-only retrieval assistant for four HDFC Mutual Fund schemes and Groww/SEBI/AMFI help pages.\n\nRULES\n1. Identify the exact fact the user asks: expense ratio, exit load, minimum SIP or lump-sum, lock-in, riskometer, benchmark, fund manager, AUM, category, launch date, stamp duty, or how to download a statement.\n2. Answer in at most 3 short sentences. No bullets, no markdown, no headings.\n3. Use ONLY the facts in CONTEXT. Never guess, infer, or use outside knowledge.\n4. Never give investment advice, recommendations, rankings, or opinions.\n5. Never compute, compare, or quote returns, CAGR, NAV, or performance.\n6. If CONTEXT does not contain the exact fact, output exactly: NOT_IN_CONTEXT\n7. Do not include URLs, source lines, or last-updated lines. The application adds exactly one citation.\n8. If the question names a scheme, use only that scheme's facts. Never mix schemes.\n9. For statement questions, give the concrete steps found in CONTEXT.\n",
+  "user_prompt": "QUESTION: How do I download my capital gains statement?\n\nCONTEXT:\n[1] How To Get Capital Gains Statement For Mutual Fund Investments? | Online Investment Platforms (similarity 0.65)\nIndividuals who use platforms such as Groww and wonder how to download mutual fund statement from Groww , can access capital gains statements by following these steps:\nStep 1: Investors have to open the Groww app and then click on the ‘You’ option. This option is located at the bottom right-hand corner.\nStep 2: Now, they need to choose the ‘SIP & Reports’ option and then click on ‘Capital Gain’.\nStep 3: After that, they have to provide the financial year and then tap on ‘Download’. Now, investors can review their capital gain statements .\nCAMS and KFin Technologies Limited\n\n[2] Where can I get the tax proof for section 80C? | Where can I get the tax proof for section 80C? (similarity 0.64)\nGo to your profile.\nSelect the 'Reports' option.\nUnder 'Tax', find 'Mutual Fund - Capital Gains'.\nChoose the financial year and click 'Download'.\n\n[3] How To Get Capital Gains Statement For Mutual Fund Investments? | CAMS and KFin Technologies Limited (similarity 0.61)\nStep 4: Investors have to choose the ‘Capital Gain Consolidated Statement’ option.\nStep 5: They have to choose ‘Previous FY’ and ‘All Funds’ from the Period and Mutual Fund Category dropdown list. Now they need to provide details such as email ID, password, PAN , and the type of mutual fund.\nInvestors will receive the statement in their registered email ID.\nHowever, to get access to CAMS capital gains statement for mutual funds, individuals have to follow these steps:\nStep 1: Individuals need to go to the webpage of CAMS and accept the Terms and Conditions.\nStep 2: Now, they will select ‘Statements’ and tap on ‘Capital Gain/Loss Statement.’\nStep 3: After this, taxpayers have to provide certain details in the required fields. Following this, they have to choose the correct financial year from the ‘Period’ list.\n\n[4] What is a mutual funds ELSS report? | What is a mutual funds ELSS report? (similarity 0.59)\nGo to your profile.\nSelect the 'Reports' option.\nUnder 'Tax', find 'Mutual Fund - ELSS statement'.\nClick on 'Download'.\n\n[5] How To Get Capital Gains Statement For Mutual Fund Investments? | Mutual Fund Companies (similarity 0.58)\nInvestors using several platforms, both online and offline, will receive their capital gains statement from respective mutual fund houses. They need to follow these steps:\nStep 1: Investors need to go to the official website of a particular mutual fund house and log in with their credentials.\nStep 2: After logging in successfully, they have to download the capital gains report for mutual funds from the site.\nThis will be a cumbersome process if an individual has invested in schemes offered by multiple mutual fund houses.\nYou may also want to know the Top 10 Mutual Fund Houses in India\n\nANSWER (max 3 sentences, facts from CONTEXT only):",
+  "context_pack": [
+    {
+      "index": 1,
+      "chunk_id": "groww-learn-capital-gains::sec::online-investment-platforms::1002",
+      "source_title": "How To Get Capital Gains Statement For Mutual Fund Investments?",
+      "source_url": "https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments",
+      "heading": "Online Investment Platforms",
+      "kind": "section",
+      "score": 0.6533,
+      "text": "Individuals who use platforms such as Groww and wonder how to download mutual fund statement from Groww , can access capital gains statements by following these steps:\nStep 1: Investors have to open the Groww app and then click on the ‘You’ option. This option is located at the bottom right-hand corner.\nStep 2: Now, they need to choose the ‘SIP & Reports’ option and then click on ‘Capital Gain’.\nStep 3: After that, they have to provide the financial year and then tap on ‘Download’. Now, investors can review their capital gain statements .\nCAMS and KFin Technologies Limited"
+    },
+    {
+      "index": 2,
+      "chunk_id": "groww-help-tax-proof-80c::sec::where-can-i-get-the-tax-proof-fo::1000",
+      "source_title": "Where can I get the tax proof for section 80C?",
+      "source_url": "https://groww.in/help/my-account/ma-others/where-can-i-get-the-tax-proof-for-section-80c",
+      "heading": "Where can I get the tax proof for section 80C?",
+      "kind": "section",
+      "score": 0.6439,
+      "text": "Go to your profile.\nSelect the 'Reports' option.\nUnder 'Tax', find 'Mutual Fund - Capital Gains'.\nChoose the financial year and click 'Download'."
+    },
+    {
+      "index": 3,
+      "chunk_id": "groww-learn-capital-gains::sec::cams-and-kfin-technologies-limit::1004",
+      "source_title": "How To Get Capital Gains Statement For Mutual Fund Investments?",
+      "source_url": "https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments",
+      "heading": "CAMS and KFin Technologies Limited",
+      "kind": "section",
+      "score": 0.6112,
+      "text": "Step 4: Investors have to choose the ‘Capital Gain Consolidated Statement’ option.\nStep 5: They have to choose ‘Previous FY’ and ‘All Funds’ from the Period and Mutual Fund Category dropdown list. Now they need to provide details such as email ID, password, PAN , and the type of mutual fund.\nInvestors will receive the statement in their registered email ID.\nHowever, to get access to CAMS capital gains statement for mutual funds, individuals have to follow these steps:\nStep 1: Individuals need to go to the webpage of CAMS and accept the Terms and Conditions.\nStep 2: Now, they will select ‘Statements’ and tap on ‘Capital Gain/Loss Statement.’\nStep 3: After this, taxpayers have to provide certain details in the required fields. Following this, they have to choose the correct financial year from the ‘Period’ list."
+    },
+    {
+      "index": 4,
+      "chunk_id": "groww-help-elss-report::sec::what-is-a-mutual-funds-elss-repo::1000",
+      "source_title": "What is a mutual funds ELSS report?",
+      "source_url": "https://groww.in/help/mutual-funds/order/how-to-download-tax-statement--for-elss--77",
+      "heading": "What is a mutual funds ELSS report?",
+      "kind": "section",
+      "score": 0.5856,
+      "text": "Go to your profile.\nSelect the 'Reports' option.\nUnder 'Tax', find 'Mutual Fund - ELSS statement'.\nClick on 'Download'."
+    },
+    {
+      "index": 5,
+      "chunk_id": "groww-learn-capital-gains::sec::mutual-fund-companies::1006",
+      "source_title": "How To Get Capital Gains Statement For Mutual Fund Investments?",
+      "source_url": "https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments",
+      "heading": "Mutual Fund Companies",
+      "kind": "section",
+      "score": 0.5841,
+      "text": "Investors using several platforms, both online and offline, will receive their capital gains statement from respective mutual fund houses. They need to follow these steps:\nStep 1: Investors need to go to the official website of a particular mutual fund house and log in with their credentials.\nStep 2: After logging in successfully, they have to download the capital gains report for mutual funds from the site.\nThis will be a cumbersome process if an individual has invested in schemes offered by multiple mutual fund houses.\nYou may also want to know the Top 10 Mutual Fund Houses in India"
+    }
+  ],
+  "raw_completion": "",
+  "answer": "Investors have to open the Groww app and then click on the ‘You’ option; then they need to choose the ‘SIP & Reports’ option and then click on ‘Capital Gain’; then they have to provide the financial year and then tap on ‘Download’.",
+  "citation_url": "https://groww.in/blog/how-to-get-capital-gains-statement-for-mutual-fund-investments",
+  "last_updated": "2026-11-01",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "error": "missing_api_key (GROQ_API_KEY)",
+  "used_chunk_id": "groww-learn-capital-gains::sec::online-investment-platforms::1002"
+}

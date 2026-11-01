@@ -1,0 +1,15 @@
+{
+  "id": "amfi-investor-corner",
+  "url": "https://www.amfiindia.com/investor",
+  "final_url": "https://www.amfiindia.com/investor",
+  "category": "Investor education",
+  "title": "AMFI Investor Corner",
+  "scheme": "",
+  "doc_type": "amc_education",
+  "fetched_at": "2026-11-01T07:18:33Z",
+  "http_status": 200,
+  "tls_verified": true,
+  "error": null,
+  "raw_html_path": "artifacts\\01_raw\\amfi-investor-corner.html",
+  "content_bytes": 247919
+}
