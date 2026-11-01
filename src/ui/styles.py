@@ -65,6 +65,12 @@ html, body, [class*="css"] {
 
 .stApp { background: var(--bg); }
 
+button, a { outline: none !important; }
+button:focus, button:focus-visible, a:focus, a:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 [data-testid="stSidebar"], [data-testid="collapsedControl"],
 [data-testid="stDecoration"], [data-testid="stStatusWidget"],
@@ -240,21 +246,51 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 
 /* Composer */
 [data-testid="stBottom"], [data-testid="stBottom"] > div, [data-testid="stBottomBlockContainer"],
-[data-testid="stChatInput"], [data-testid="stChatInput"] > div, [data-testid="stChatInput"] textarea {
-  background: transparent !important; box-shadow: none !important; background-image: none !important;
+[data-testid="stChatInput"], [data-testid="stChatInput"] > div, [data-testid="stChatInput"] textarea,
+[data-testid="stChatInput"] div[data-baseweb="textarea"],
+[data-testid="stChatInput"] div[data-baseweb="base-input"] {
+  background: transparent !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  outline: none !important;
+  border-color: transparent !important;
 }
 [data-testid="stBottom"] { padding: 0 !important; }
 [data-testid="stBottomBlockContainer"] { max-width: 760px !important; margin: 0 auto !important; padding: var(--s3) 20px var(--s4) !important; }
+
+[data-testid="stChatInput"],
+[data-testid="stChatInput"] > div,
+[data-testid="stChatInput"] div[data-baseweb="textarea"],
+[data-testid="stChatInput"] div[data-baseweb="base-input"],
+[data-testid="stChatInput"] textarea {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
 [data-testid="stChatInput"] {
-  border-radius: var(--radius-pill) !important;
   border: 1px solid var(--border) !important;
+  border-radius: var(--radius-pill) !important;
   background: var(--surface) !important;
   padding: 4px 8px !important;
   overflow: hidden !important;
+  transition: border-color 150ms ease;
 }
-[data-testid="stChatInput"] > div { border-radius: inherit !important; overflow: hidden !important; background: transparent !important; }
+[data-testid="stChatInput"]:focus-within {
+  border-color: var(--brand) !important;
+}
+[data-testid="stChatInput"] > div,
+[data-testid="stChatInput"] div[data-baseweb="textarea"],
+[data-testid="stChatInput"] div[data-baseweb="base-input"] {
+  border-radius: inherit !important;
+  background: transparent !important;
+}
 [data-testid="stChatInput"] textarea { font-size: 15px !important; color: var(--text) !important; background: transparent !important; }
-[data-testid="stChatInput"] button { background: var(--brand) !important; color: #FFFFFF !important; border-radius: 50% !important; }
+[data-testid="stChatInput"] button { background: var(--brand) !important; color: #FFFFFF !important; border-radius: 50% !important; border: none !important; outline: none !important; box-shadow: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-testid="stChatInput"] { transition: none !important; }
+}
 .composer-caption { text-align: center; font-size: 11px; color: var(--text-2); margin-top: var(--s2); }
 
 /* Typing indicator */
