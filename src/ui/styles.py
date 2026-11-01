@@ -25,7 +25,7 @@ CSS = r"""
   --err-bg: #FDECEA;
   --radius-card: 12px;
   --radius-pill: 999px;
-  --assistant-indent: 40px;
+  --assistant-indent: 38px;
   --brand-tint: rgba(0,166,126,0.10);
   --on-brand: #FFFFFF;
   --s1: 4px;
@@ -138,7 +138,7 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 .thread { display: flex; flex-direction: column; gap: var(--s6); }
 .turn { display: flex; flex-direction: column; gap: var(--s4); }
 .turn.user { align-items: flex-end; }
-.turn.assistant { align-items: flex-start; flex-direction: row; gap: var(--s3); }
+.turn.assistant { align-items: flex-start; flex-direction: row; gap: 10px; }
 
 /* User bubble */
 .user-bubble {
@@ -289,6 +289,7 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 [data-testid="stPills"] {
   margin-top: var(--s3);
   margin-left: var(--assistant-indent);
+  padding-left: 0 !important;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
