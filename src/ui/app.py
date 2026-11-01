@@ -72,7 +72,7 @@ _STARTERS = ["Expense ratio", "Exit load", "Minimum SIP", "Fund manager"]
 
 st.session_state.setdefault("messages", [])
 st.session_state.setdefault("pending_prompt", "")
-st.session_state.setdefault("has_started", False)
+st.session_state.setdefault("started", False)
 
 
 def status_for(route: str) -> tuple[str, str]:
@@ -242,13 +242,19 @@ if "chip" in qp:
             st.session_state.pending_prompt = f"What is the {topic} of {fund}?"
     st.query_params.clear()
 
-# ---------- welcome / transcript ----------
-if not st.session_state.has_started and not st.session_state.messages:
+# ---------- empty state ----------
+if not st.session_state.started and not st.session_state.messages:
     st.markdown(
-        '<div class="welcome"><h2>Ask about any mutual fund</h2>'
-        '<p>Factual answers from official fund pages, with one citation per answer.</p></div>',
+        '<div class="empty-state">'
+        '  <div class="welcome"><h2>Ask about any mutual fund</h2>'
+        '  <p>Factual answers from official fund pages, with one citation per answer.</p></div>'
+        '</div>',
         unsafe_allow_html=True,
     )
+    st.markdown('<div class="empty-composer">', unsafe_allow_html=True)
+    with st.container():
+        prompt_empty = st.chat_input("Ask about expense ratio, exit load, SIP…", key="empty_input")
+    st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('<div class="starter-chips">', unsafe_allow_html=True)
     for label in _STARTERS:
         st.markdown(
@@ -256,23 +262,35 @@ if not st.session_state.has_started and not st.session_state.messages:
             unsafe_allow_html=True,
         )
     st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
+                unsafe_allow_html=True)
 
-# transcript
-st.markdown('<div class="thread" id="thread">', unsafe_allow_html=True)
-for message in st.session_state.messages:
-    if message["role"] == "user":
-        st.markdown(render_user(message["content"]), unsafe_allow_html=True)
-    else:
-        st.markdown(render_assistant(message["response"]), unsafe_allow_html=True)
-st.markdown('<div id="thread-bottom" style="height:1px;"></div></div>', unsafe_allow_html=True)
+    if prompt_empty:
+        st.session_state.pending_prompt = prompt_empty
+        st.session_state.started = True
+        st.rerun()
 
-# ---------- input ----------
-prompt = st.chat_input("Ask about expense ratio, exit load, SIP…")
+# ---------- transcript ----------
+if st.session_state.started or st.session_state.messages:
+    st.markdown('<div class="thread fade-in" id="thread">', unsafe_allow_html=True)
+    for message in st.session_state.messages:
+        if message["role"] == "user":
+            st.markdown(render_user(message["content"]), unsafe_allow_html=True)
+        else:
+            st.markdown(render_assistant(message["response"]), unsafe_allow_html=True)
+    st.markdown('<div id="thread-bottom" style="height:1px;"></div></div>', unsafe_allow_html=True)
+
+# ---------- input (pinned, only after started) ----------
+prompt = None
+if st.session_state.started:
+    prompt = st.chat_input("Ask about expense ratio, exit load, SIP…", key="main_input")
+
 if st.session_state.pending_prompt:
     prompt = st.session_state.pending_prompt
     st.session_state.pending_prompt = ""
 
 if prompt:
+    st.session_state.started = True
     st.session_state.has_started = True
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.markdown(render_user(prompt), unsafe_allow_html=True)
@@ -293,10 +311,8 @@ if prompt:
     st.markdown(render_assistant(response), unsafe_allow_html=True)
     st.session_state.messages.append({"role": "assistant", "response": response})
 
+# scroll to bottom
 components.html(
-    "<script>window.parent.document.getElementById('thread-bottom').scrollIntoView({behavior:'smooth',block:'end'});</script>",
+    "<script>var el=window.parent.document.getElementById('thread-bottom'); if(el) el.scrollIntoView({behavior:'smooth',block:'end'});</script>",
     height=0,
 )
-
-st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
-            unsafe_allow_html=True)

@@ -307,9 +307,14 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 details { border: 1px solid var(--border); border-radius: 8px; padding: var(--s1) var(--s2); background: var(--surface); margin: var(--s1) 0; }
 details summary { cursor: pointer; font-size: 12px; color: var(--text-2); font-weight: 500; }
 
+.empty-state { padding-top: 25vh; }
+.empty-composer [data-testid="stChatInput"] { max-width: 640px !important; margin: 0 auto !important; }
+.thread.fade-in { animation: fadeIn 200ms ease both; }
+
 @media (prefers-reduced-motion: reduce) {
   .answer-card { animation: none; }
   .typing-indicator span { animation: none; opacity: 0.7; }
+  .thread.fade-in { animation: none; }
 }
 </style>
 """
