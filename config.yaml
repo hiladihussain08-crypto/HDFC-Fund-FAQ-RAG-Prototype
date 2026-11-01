@@ -1,0 +1,88 @@
+# ---------------------------------------------------------------------------
+# Groww Mutual Fund FAQ Assistant - changeable settings (no secrets here)
+# Secrets and model ids live in .env (see .env.example).
+# ---------------------------------------------------------------------------
+
+sources_file: data/sources.csv
+artifacts_dir: artifacts
+
+chroma:
+  persist_dir: chroma_db
+  collection: hdfc_mf_faq
+  # Distance metric for the HNSW index: cosine | l2 | ip.
+  space: cosine
+  # Vectors pushed to Chroma per upsert call.
+  batch_size: 128
+
+embedding:
+  # Must be identical for ingest and query. 384-dimensional MiniLM.
+  model: sentence-transformers/all-MiniLM-L6-v2
+  batch_size: 32
+  normalize: true
+  # Asserted after encoding; a mismatch aborts the phase instead of
+  # silently writing a broken index.
+  expected_dim: 384
+
+chunking:
+  # heading_then_recursive | recursive | fixed
+  # Fact strips are always emitted for scheme pages; the strategy only
+  # changes how the remaining section text is split.
+  strategy: heading_then_recursive
+  max_chars: 900
+  overlap_chars: 120
+  min_chars: 40
+  # MiniLM's window. A chunk over this fails the phase.
+  max_tokens: 256
+
+retrieval:
+  k: 5
+  candidate_k: 24
+  # Cosine similarity floor (1 - Chroma cosine distance).
+  min_score: 0.30
+  # When the question names a covered scheme, restrict retrieval to that
+  # scheme's page (plus policy/education pages for generic questions).
+  filter_by_scheme: true
+
+llm:
+  provider: groq            # groq | openai | gemini | anthropic | mistral | extractive
+  temperature: 0.1
+  max_tokens: 256
+  timeout_seconds: 45
+  # If the provider is unavailable (no key, network error), fall back to a
+  # deterministic extractive answer built from the retrieved chunk.
+  fallback_to_extractive: true
+
+guard:
+  # Questions matching these routes never reach the LLM.
+  educational_url: https://investor.sebi.gov.in/
+  returns_url: https://investor.sebi.gov.in/personalinvestments.html
+  factsheet_url: https://www.hdfcfund.com/mutual-funds/factsheets
+  covered_scheme_ids:
+    - groww-large-cap
+    - groww-flexi-cap
+    - groww-elss
+    - groww-mid-cap
+
+policy:
+  # Every user-visible answer carries exactly one citation link.
+  max_sentences: 3
+  last_updated_prefix: "Last updated from sources: "
+  refusal_last_updated: "Last updated from sources: policy response (no scheme data used)"
+
+verify:
+  # Phase 3 acceptance probe, run right after indexing.
+  phase3:
+    query: "expense ratio ELSS"
+    expect_scheme: groww-elss
+    expect_heading_contains: expense
+    top_k: 3
+
+ui:
+  title: "Groww Mutual Fund FAQ Assistant"
+  welcome: "Ask factual questions about selected HDFC Mutual Fund schemes."
+  disclaimer: "Facts-only. No investment advice."
+  example_questions:
+    - "What is the expense ratio of HDFC Large Cap Fund Direct Growth?"
+    - "What is the lock-in for HDFC ELSS Tax Saver Fund?"
+    - "What is the minimum SIP for HDFC Mid Cap Fund Direct Growth?"
+  show_artifacts: true

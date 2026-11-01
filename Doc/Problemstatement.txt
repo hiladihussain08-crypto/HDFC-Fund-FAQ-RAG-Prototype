@@ -1,0 +1,67 @@
+PROBLEM STATEMENT — Mutual Fund FAQ Assistant (facts-only, with citations)
+==========================================================================
+
+We are using the Groww app to build a small FAQ assistant that answers facts about
+mutual fund schemes — e.g., expense ratio, exit load, minimum SIP, lock-in (ELSS),
+riskometer, benchmark, and how to download statements — using only official public
+pages. Every answer must include one source link. No advice.
+
+WHO THIS HELPS
+--------------
+Retail users comparing schemes; support/content teams answering repetitive MF questions.
+
+WHAT YOU MUST BUILD
+-------------------
+Data — scrape these pages and store:
+
+| # | Page                                   | URL                                                                                    |
+|---|----------------------------------------|----------------------------------------------------------------------------------------|
+| 1 | AMC overview — HDFC Mutual Fund        | https://groww.in/mutual-funds/amc/hdfc-mutual-funds                                      |
+| 2 | Large Cap — HDFC Large Cap Fund Direct Growth | https://groww.in/mutual-funds/hdfc-large-cap-fund-direct-growth                   |
+| 3 | Flexi Cap — HDFC Flexi Cap Direct Plan Growth | https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth                      |
+| 4 | ELSS (tax saver) — HDFC ELSS Tax Saver Fund Direct Plan Growth | https://groww.in/mutual-funds/hdfc-elss-tax-saver-fund-direct-plan-growth |
+| 5 | Mid Cap — HDFC Mid Cap Fund Direct Growth | https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth                        |
+
+FAQ assistant (working prototype):
+- Answers factual queries only (e.g., "Expense ratio of?", "ELSS lock-in?", "Minimum SIP?",
+  "Exit load?", "Riskometer/benchmark?", "How to download capital-gains statement?").
+- Shows one clear citation link in every answer.
+- Refuses opinionated/portfolio questions (e.g., "Should I buy/sell?") with a polite,
+  facts-only message and a relevant educational link.
+- Tiny UI: welcome line + 3 example questions and a note: "Facts-only. No investment advice."
+
+KEY CONSTRAINTS
+---------------
+- Public sources only. No screenshots of the app back-end; no third-party blogs as sources.
+- No PII. Do not accept/store PAN, Aadhaar, account numbers, OTPs, emails, or phone numbers.
+- No performance claims. Don't compute/compare returns; link to the official factsheet if asked.
+- Clarity & transparency. Keep answers ≤3 sentences; add "Last updated from sources: ".
+
+WHAT TO SUBMIT (DELIVERABLES)
+-----------------------------
+1. Working prototype link (app/notebook) or a ≤3-min demo video if hosting isn't possible.
+2. Source list (CSV/MD) of the 15–25 URLs you used.
+3. README with setup steps, scope (AMC + schemes), and known limits.
+4. Sample Q&A file (5–10 queries with the assistant's answers + links).
+5. Disclaimer snippet used in your UI (facts-only, no advice).
+
+SKILLS BEING TESTED
+-------------------
+W1 — Thinking Like a Model: identify the exact fact asked; decide answer vs. refuse.
+W2 — LLMs & Prompting: instruction style, concise phrasing, polite safe-refusals,
+     citation wording.
+W3 — RAGs (only): small-corpus retrieval with accurate citations from AMC/SEBI/AMFI pages.
+
+IMPLEMENTATION NOTES (from requester)
+-------------------------------------
+- This is a demo of RAG: each stage's data must be stored explicitly to be shown.
+- Build phase-wise: Data Loading → Data Chunking → Data Embedding → Data Retrieval →
+  Generation (LLM) → UI.
+- Data Chunking: the AI coding agent decides the chunking strategy based on the data.
+- Data Embedding: sentence-transformers/all-MiniLM-L6-v2.
+- Vector DB: ChromaDB.
+- Embedding model, chunking params and vector-DB settings must live in a config file
+  so they can be changed without code edits.
+- Data Retrieval: embedding model same as ingestion; vector DB same as ingestion.
+- LLM: Groq (API key in .env), model from .env — default id: qwen/qwen3.8-27b.
+  Gemini, OpenAI, Anthropic and Mistral noted as additional provider options.
