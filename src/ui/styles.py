@@ -79,7 +79,8 @@ button:focus, button:focus-visible, a:focus, a:focus-visible {
 header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 [data-testid="stSidebar"], [data-testid="collapsedControl"],
 [data-testid="stDecoration"], [data-testid="stStatusWidget"],
-.stAppDeployButton, [class*="viewerBadge"] {
+.stAppDeployButton, [class*="viewerBadge"],
+[data-testid="stHeaderActionElements"], .stMarkdown a.anchor-link {
   display: none !important;
 }
 
@@ -371,7 +372,7 @@ details { border: 1px solid var(--border); border-radius: 8px; padding: var(--s1
 details summary { cursor: pointer; font-size: 12px; color: var(--text-2); font-weight: 500; }
 
 .empty-state { padding-top: 0; }
-.empty-composer [data-testid="stChatInput"] { max-width: 640px !important; margin: 0 auto !important; }
+.empty-composer [data-testid="stChatInput"] { max-width: 640px !important; margin: 0 auto !important; min-height: 56px !important; }
 .empty-state .welcome { margin-bottom: var(--s2); }
 .empty-state .welcome p { margin-bottom: var(--s5); }
 .empty-composer { margin-bottom: var(--s3); }

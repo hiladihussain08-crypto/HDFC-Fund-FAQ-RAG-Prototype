@@ -321,8 +321,17 @@ if not st.session_state.started and not st.session_state.messages:
         chips_html += f'<a class="chip" href="?q={q}" target="_self">{esc(label)}</a>'
     chips_html += "</div>"
     st.markdown(chips_html, unsafe_allow_html=True)
+    st.markdown('<div class="empty-composer">', unsafe_allow_html=True)
+    with st.container():
+        prompt_empty = st.chat_input("Ask about expense ratio, exit load, SIP…", key="empty_input")
+    st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
                 unsafe_allow_html=True)
+
+    if prompt_empty:
+        st.session_state.pending_prompt = prompt_empty
+        st.session_state.started = True
+        st.rerun()
 
 # ---------- transcript ----------
 if st.session_state.started or st.session_state.messages:
