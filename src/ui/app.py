@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import html
 import json
 import re
 import sys
@@ -14,6 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 import streamlit as st  # noqa: E402
+import streamlit.components.v1 as components  # noqa: E402
 
 from src.config import load_config  # noqa: E402
 from src.query.pipeline import answer_question  # noqa: E402
@@ -25,7 +27,6 @@ st.set_page_config(page_title="Fund FAQ assistant", page_icon="💬", layout="wi
 
 config = load_config()
 inject_styles()
-
 
 FOLLOWUPS: dict[str, list[str]] = {
     "expense_ratio": ["Exit load", "Minimum SIP", "Fund manager"],
@@ -70,6 +71,16 @@ _HERO_RE = re.compile(r"(₹\s?[\d,]+(?:\.\d+)?|\d[\d,]*\.?\d*\s*%)")
 _STARTERS = ["Expense ratio", "Exit load", "Minimum SIP", "Fund manager"]
 
 
+def status_for(route: str) -> tuple[str, str]:
+    if route == "answer":
+        return "ok", "Factual answer"
+    if route and route.startswith("refuse"):
+        return "warn", "I can't advise on that"
+    if route == "miss":
+        return "neutral", "Not in my data"
+    return "err", "Something went wrong"
+
+
 def extract_hero(answer: str):
     m = _HERO_RE.search(answer)
     if not m:
@@ -80,8 +91,16 @@ def extract_hero(answer: str):
     return hero, secondary
 
 
+def hero_remainder(answer: str, hero: str, secondary: str | None) -> str:
+    text = answer
+    text = text.replace(hero, "", 1)
+    if secondary:
+        text = text.replace(f"({secondary})", "", 1)
+    text = " ".join(text.split())
+    return text
+
+
 def format_updated(last_updated: str) -> str:
-    # "Last updated from sources: 2026-11-01" -> "Updated 1 Nov 2026"
     stamp = last_updated.replace("Last updated from sources:", "").strip()
     try:
         dt = datetime.strptime(stamp, "%Y-%m-%d")
@@ -97,65 +116,85 @@ def domain_of(url: str) -> str:
         return url
 
 
-def status_for(route: str) -> tuple[str, str]:
-    if route == "answer":
-        return "ok", "Factual answer"
-    if route.startswith("refuse"):
-        return "warn", "I can't advise on that"
-    if route == "miss":
-        return "neutral", "Not in my data"
-    return "err", "Something went wrong"
-
-
-def render_assistant_message(response: dict) -> None:
-    status_class, status_label = status_for(response["route"])
+def render_user(content: str) -> None:
     st.markdown(
-        f'<span class="status-chip {status_class}"><span class="dot"></span>{status_label}</span>',
+        f'<div class="turn user"><div class="user-bubble">{html.escape(content)}</div></div>',
         unsafe_allow_html=True,
     )
 
+
+def render_assistant(response: dict) -> None:
+    status_class, status_label = status_for(response["route"])
     route = response["route"]
     intent = response.get("intent", "other")
     answer = response["answer"]
-    hero, secondary = extract_hero(answer) if route == "answer" else (None, None)
 
+    hero, secondary = (extract_hero(answer) if route == "answer" else (None, None))
+
+    # Answer card
     if route == "answer" and hero:
         label = INTENT_LABEL.get(intent, intent.replace("_", " ").title())
-        secondary_html = f'<span class="hero-secondary">{secondary}</span>' if secondary else ""
+        secondary_html = f'<span class="hero-secondary">{html.escape(secondary)}</span>' if secondary else ""
+        remainder = hero_remainder(answer, hero, secondary)
+        extra_html = f'<div class="answer-text"><p>{html.escape(remainder)}</p></div>' if len(remainder) > 25 else ""
         card_html = (
-            f'<div class="answer-card fade-in">'
+            f'<div class="answer-card">'
             f'  <div class="hero-row">'
             f'    <div class="hero-block">'
-            f'      <div class="hero-label">{label}</div>'
-            f'      <div class="hero-number">{hero}</div>'
+            f'      <div class="hero-label">{html.escape(label)}</div>'
+            f'      <div class="hero-number">{html.escape(hero)}</div>'
             f'    </div>'
             f'    {secondary_html}'
             f'  </div>'
-            f'  <div class="answer-text"><p>{answer}</p></div>'
+            f'  {extra_html}'
             f'</div>'
         )
     else:
         card_html = (
-            f'<div class="answer-card fade-in">'
-            f'  <div class="answer-text"><p>{answer}</p></div>'
+            f'<div class="answer-card">'
+            f'  <div class="answer-text"><p>{html.escape(answer)}</p></div>'
             f'</div>'
         )
-    st.markdown(card_html, unsafe_allow_html=True)
 
-    # Source row
+    source_html = ""
     citation_url = response.get("citation_url", "")
-    updated = format_updated(response.get("last_updated", ""))
     if citation_url:
         domain = domain_of(citation_url)
-        st.markdown(
+        source_html = (
             f'<div class="source-row">'
-            f'  <a class="domain-chip" href="{citation_url}" target="_blank" rel="noopener noreferrer">{domain}</a>'
-            f'  <span class="clock">Updated {updated.replace("Updated ", "")}</span>'
-            f'</div>',
-            unsafe_allow_html=True,
+            f'  <a class="domain-chip" href="{html.escape(citation_url)}" target="_blank" rel="noopener noreferrer">{html.escape(domain)}</a>'
+            f'  <span style="display:inline-flex;align-items:center;gap:4px;">'
+            f'    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+            f'    {html.escape(format_updated(response.get("last_updated", "")))}'
+            f'  </span>'
+            f'</div>'
         )
 
-    # How this was answered
+    chips_html = ""
+    if route == "answer":
+        scheme = SCHEME_BY_ID.get(response.get("scheme", ""))
+        chips = FOLLOWUPS.get(intent, [])
+        if scheme and chips:
+            chips_html = '<div class="chip-row">' + "".join(
+                f'<button class="chip" data-chip="{html.escape(chip)}">{html.escape(chip)}</button>'
+                for chip in chips
+            ) + "</div>"
+
+    avatar_html = '<div class="avatar">F</div>'
+    stack_html = (
+        f'<span class="status-chip {status_class}"><span class="dot"></span>{status_label}</span>'
+        + card_html
+        + source_html
+        + f'<div class="meta">mode={html.escape(str(response["generation"].get("mode", "policy")))} · intent={html.escape(intent)} · {response["latency_ms"]} ms · query_id={html.escape(response["query_id"])}</div>'
+        + chips_html
+    )
+
+    st.markdown(
+        f'<div class="turn assistant">{avatar_html}<div class="assistant-stack">{stack_html}</div></div>',
+        unsafe_allow_html=True,
+    )
+
+    # How this was answered expander
     with st.expander("How this was answered", expanded=False):
         st.markdown(
             f"**Mode:** {response['generation'].get('mode', 'policy')}  \n"
@@ -181,23 +220,18 @@ def render_assistant_message(response: dict) -> None:
             except Exception as exc:  # noqa: BLE001
                 st.caption(f"Could not read {path}: {exc}")
 
-    # Follow-up chips (only on factual answers with a known fund)
+    # Wire up follow-up chips via session state through a hidden mechanism:
+    # Streamlit buttons cannot be inside unsafe HTML, so render real buttons.
     if route == "answer":
-        scheme_id = response.get("scheme", "")
-        scheme = SCHEME_BY_ID.get(scheme_id)
-        if scheme:
-            chips = FOLLOWUPS.get(intent, [])
-            if chips:
-                st.markdown('<div class="chip-row">', unsafe_allow_html=True)
-                cols = st.columns(len(chips))
-                for col, chip in zip(cols, chips):
-                    if col.button(chip, key=f"fu_{response['query_id']}_{chip}"):
-                        topic = CHIP_TOPIC.get(chip, chip.lower())
-                        st.session_state.pending_prompt = (
-                            f"What is the {topic} of {scheme.name}?"
-                        )
-                        st.rerun()
-                st.markdown("</div>", unsafe_allow_html=True)
+        scheme = SCHEME_BY_ID.get(response.get("scheme", ""))
+        chips = FOLLOWUPS.get(intent, [])
+        if scheme and chips:
+            cols = st.columns(len(chips))
+            for col, chip in zip(cols, chips):
+                if col.button(chip, key=f"fu_{response['query_id']}_{chip}"):
+                    topic = CHIP_TOPIC.get(chip, chip.lower())
+                    st.session_state.pending_prompt = f"What is the {topic} of {scheme.name}?"
+                    st.rerun()
 
 
 # ---------- header ----------
@@ -220,25 +254,28 @@ if "pending_prompt" not in st.session_state:
 
 # ---------- welcome state ----------
 if not st.session_state.messages:
-    st.markdown('<div class="welcome"><h2 class="welcome-heading">Ask about any mutual fund</h2>'
-                '<p class="welcome-helper">Factual answers from official fund pages, with one citation per answer.</p></div>',
-                unsafe_allow_html=True)
+    st.markdown(
+        '<div class="welcome"><h2>Ask about any mutual fund</h2>'
+        '<p>Factual answers from official fund pages, with one citation per answer.</p></div>',
+        unsafe_allow_html=True,
+    )
     st.markdown('<div class="starter-chips">', unsafe_allow_html=True)
     cols = st.columns(len(_STARTERS))
     for col, label in zip(cols, _STARTERS):
-        if col.button(label, key=f"starter_{label}", use_container_width=True):
+        if col.button(label, key=f"starter_{label}"):
             topic = CHIP_TOPIC[label]
             st.session_state.pending_prompt = f"What is the {topic} of HDFC Large Cap Fund Direct Growth?"
             st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ---------- chat transcript ----------
+# ---------- thread ----------
+st.markdown('<div class="thread" id="thread">', unsafe_allow_html=True)
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        if message["role"] == "assistant":
-            render_assistant_message(message["response"])
-        else:
-            st.markdown(message["content"])
+    if message["role"] == "user":
+        render_user(message["content"])
+    else:
+        render_assistant(message["response"])
+st.markdown('<div id="thread-bottom"></div></div>', unsafe_allow_html=True)
 
 # ---------- input ----------
 prompt = st.chat_input("Ask about expense ratio, exit load, SIP…")
@@ -248,24 +285,29 @@ if st.session_state.pending_prompt:
 
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
+    render_user(prompt)
 
-    with st.chat_message("assistant"):
-        placeholder = st.empty()
-        placeholder.markdown(
-            '<div class="typing-indicator"><span></span><span></span><span></span></div>',
-            unsafe_allow_html=True,
-        )
-        try:
-            response = answer_question(prompt, config, persist=True)
-        except Exception as exc:  # noqa: BLE001
-            placeholder.empty()
-            st.error("The pipeline is not ready. Run the ingest steps first, then try again.")
-            st.stop()
+    placeholder = st.empty()
+    placeholder.markdown(
+        '<div class="turn assistant"><div class="avatar">F</div>'
+        '<div class="assistant-stack"><div class="typing-indicator"><span></span><span></span><span></span></div></div></div>',
+        unsafe_allow_html=True,
+    )
+    try:
+        response = answer_question(prompt, config, persist=True)
+    except Exception:  # noqa: BLE001
         placeholder.empty()
-        render_assistant_message(response)
+        st.error("The pipeline is not ready. Run the ingest steps first, then try again.")
+        st.stop()
+    placeholder.empty()
+    render_assistant(response)
     st.session_state.messages.append({"role": "assistant", "response": response})
+
+# scroll to bottom
+components.html(
+    "<script>window.parent.document.getElementById('thread-bottom').scrollIntoView({behavior:'smooth',block:'end'});</script>",
+    height=0,
+)
 
 st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
             unsafe_allow_html=True)
