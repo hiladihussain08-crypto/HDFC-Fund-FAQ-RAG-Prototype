@@ -7,3 +7,10 @@ __pycache__/
 # (Uncomment to ignore them again.)
 # chroma_db/
 # artifacts/
+
+# Per-query generated files (one per question) are not committed.
+artifacts/05_retrieval/*
+!artifacts/05_retrieval/phase7_report.json
+!artifacts/05_retrieval/.gitkeep
+artifacts/06_generation/*
+!artifacts/06_generation/.gitkeep
