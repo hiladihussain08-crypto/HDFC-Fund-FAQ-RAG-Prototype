@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import os
 import sys
 import time
 from datetime import datetime, timezone
@@ -196,7 +197,10 @@ def answer_question(
             "error": "",
             "pii_redacted": bool(guard.pii_types),
         }
-        if persist:
+        _write_artifacts = persist and os.environ.get(
+            "WRITE_ARTIFACTS", "false"
+        ).lower() in {"1", "true", "yes", "on"}
+        if _write_artifacts:
             write_json(config.retrieval_dir / f"{query_id}.json", retrieval_artifact)
             write_json(
                 config.generation_dir / f"{query_id}.json", generation_artifact
@@ -267,7 +271,10 @@ def answer_question(
             "retrieval": str(config.retrieval_dir / f"{query_id}.json"),
             "generation": str(config.generation_dir / f"{query_id}.json"),
         }
-        if persist:
+        _write_artifacts = persist and os.environ.get(
+            "WRITE_ARTIFACTS", "false"
+        ).lower() in {"1", "true", "yes", "on"}
+        if _write_artifacts:
             write_json(config.retrieval_dir / f"{query_id}.json", retrieval_artifact)
             write_json(
                 config.generation_dir / f"{query_id}.json",
@@ -350,7 +357,10 @@ def answer_question(
         "generation": str(config.generation_dir / f"{query_id}.json"),
     }
 
-    if persist:
+    _write_artifacts = persist and os.environ.get(
+        "WRITE_ARTIFACTS", "false"
+    ).lower() in {"1", "true", "yes", "on"}
+    if _write_artifacts:
         write_json(config.retrieval_dir / f"{query_id}.json", retrieval_artifact)
         write_json(
             config.generation_dir / f"{query_id}.json",

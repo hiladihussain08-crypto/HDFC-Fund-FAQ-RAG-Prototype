@@ -1,3 +1,12 @@
+---
+title: HDFC Fund FAQ
+emoji: "📄"
+colorFrom: green
+colorTo: blue
+sdk: docker
+app_port: 7860
+---
+
 # Groww Mutual Fund FAQ Assistant
 
 A small, facts-only RAG prototype that answers factual questions about four HDFC
