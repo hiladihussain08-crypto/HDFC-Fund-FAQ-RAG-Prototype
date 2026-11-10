@@ -299,17 +299,15 @@ if st.session_state.pending_question:
             st.session_state[k] = None
     st.rerun()
 
-# ---------- empty state ----------
+# ---------- welcome state ----------
 if not st.session_state.started and not st.session_state.messages:
     st.markdown('<div class="empty-state">', unsafe_allow_html=True)
-    st.markdown('<div class="empty-middle">', unsafe_allow_html=True)
     st.markdown('<div class="sphere" id="sphere"></div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="welcome"><h2>Ask about any mutual fund</h2>'
         '<p>Factual answers from official fund pages, with one citation per answer.</p></div>',
         unsafe_allow_html=True,
     )
-    st.markdown('</div>', unsafe_allow_html=True)
     chip_qs = {
         "Expense ratio": "What is the expense ratio of HDFC Large Cap Fund Direct Growth?",
         "Exit load": "What is the exit load of HDFC Large Cap Fund Direct Growth?",
@@ -322,7 +320,12 @@ if not st.session_state.started and not st.session_state.messages:
         chips_html += f'<a class="chip" href="?q={q}" target="_self">{esc(label)}</a>'
     chips_html += "</div>"
     st.markdown(chips_html, unsafe_allow_html=True)
-    st.markdown('<div style="height:112px;"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="empty-composer">', unsafe_allow_html=True)
+    with st.container():
+        prompt_empty = st.chat_input("Ask about expense ratio, exit load, SIP…", key="empty_input")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
+                unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown(
@@ -349,6 +352,11 @@ if not st.session_state.started and not st.session_state.messages:
         unsafe_allow_html=True,
     )
 
+    if prompt_empty:
+        st.session_state.pending_prompt = prompt_empty
+        st.session_state.started = True
+        st.rerun()
+
 # ---------- transcript ----------
 if st.session_state.started or st.session_state.messages:
     st.markdown('<div class="thread fade-in" id="thread">', unsafe_allow_html=True)
@@ -360,8 +368,10 @@ if st.session_state.started or st.session_state.messages:
             render_followups(idx)
     st.markdown('<div id="thread-bottom" style="height:1px;"></div></div>', unsafe_allow_html=True)
 
-# ---------- input (single, top level) ----------
-prompt = st.chat_input("Ask about expense ratio, exit load, SIP…")
+# ---------- input (pinned, only after started) ----------
+prompt = None
+if st.session_state.started:
+    prompt = st.chat_input("Ask about expense ratio, exit load, SIP…")
 
 if st.session_state.pending_prompt:
     prompt = st.session_state.pending_prompt
@@ -400,7 +410,7 @@ if prompt and not st.session_state.pending_question:
 glow_opacity = "0.10" if st.session_state.started else "0.18"
 st.markdown(f'<div class="glow" id="glow" style="opacity:{glow_opacity};"></div>', unsafe_allow_html=True)
 
-# body class toggle for scroll lock
+# toggle empty-state class on body for overflow control
 st.markdown(
     f"<script>document.body.classList.toggle('empty-state-active', {'true' if not st.session_state.started else 'false'});</script>",
     unsafe_allow_html=True,
@@ -411,5 +421,9 @@ components.html(
     height=0,
 )
 
-st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
-            unsafe_allow_html=True)
+if not st.session_state.started:
+    st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
+                unsafe_allow_html=True)
+else:
+    st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
+                unsafe_allow_html=True)
