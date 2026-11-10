@@ -410,6 +410,12 @@ if prompt and not st.session_state.pending_question:
 glow_opacity = "0.10" if st.session_state.started else "0.18"
 st.markdown(f'<div class="glow" id="glow" style="opacity:{glow_opacity};"></div>', unsafe_allow_html=True)
 
+# toggle empty-state class on body for overflow control
+st.markdown(
+    f"<script>document.body.classList.toggle('empty-state-active', {'true' if not st.session_state.started else 'false'});</script>",
+    unsafe_allow_html=True,
+)
+
 components.html(
     "<script>var el=window.parent.document.getElementById('thread-bottom'); if(el) el.scrollIntoView({behavior:'smooth',block:'end'});</script>",
     height=0,

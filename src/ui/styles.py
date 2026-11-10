@@ -63,8 +63,11 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 .block-container {
   max-width: 760px;
   margin: 0 auto;
-  padding: 64px 20px 180px 20px;
+  padding: 64px 20px 200px 20px;
   gap: 0 !important;
+}
+body.empty-state-active, body.empty-state-active .stApp, body.empty-state-active [data-testid="stAppViewContainer"], body.empty-state-active [data-testid="stMain"] {
+  height: 100dvh; overflow: hidden;
 }
 @media (max-width: 600px) {
   .block-container { padding-top: 32px; }
@@ -77,7 +80,7 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
   justify-content: space-between;
   gap: var(--s3);
   padding: var(--s2) 0 var(--s4) 0;
-  border-bottom: 1px solid rgba(17,17,17,0.08);
+  border-bottom: none;
   margin-bottom: var(--s5);
 }
 .header-left {
@@ -129,11 +132,17 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
 .empty-composer { max-width: 640px; margin: 24px auto 16px; }
 .empty-composer [data-testid="stChatInput"] { max-width: 640px !important; margin: 0 auto !important; min-height: 56px !important; }
 
-.starter-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+.starter-chips {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  position: fixed; left: 50%; transform: translateX(-50%);
+  max-width: 760px; width: 100%;
+  bottom: 92px; z-index: 99;
+  padding: 0 16px; margin: 0;
+}
 .starter-chips .chip { display: inline-block; padding: 8px 16px; border: 1px solid rgba(17,17,17,0.14); border-radius: 999px; background: #FFFFFF; color: #111111; font-size: 13px; text-decoration: none; white-space: nowrap; opacity: 1 !important; }
 .starter-chips .chip:hover, .starter-chips .chip:focus-visible { border-color: #C23E08; color: #C23E08; outline: none; }
 
-.composer-caption { text-align: center; font-size: 11px; color: var(--text-2); margin-top: 24px; }
+.composer-caption { position: fixed; bottom: 4px; left: 50%; transform: translateX(-50%); max-width: 760px; width: 100%; text-align: center; font-size: 11px; color: var(--text-2); padding: 0 16px; z-index: 101; margin: 0; }
 
 /* Thread */
 .thread { display: flex; flex-direction: column; gap: var(--s6); }
@@ -286,8 +295,19 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stToolbar"],
   background: transparent !important; box-shadow: none !important; background-image: none !important;
   outline: none !important; border-color: transparent !important;
 }
-[data-testid="stBottom"] { padding: 0 !important; }
-[data-testid="stBottomBlockContainer"] { max-width: 760px !important; margin: 0 auto !important; padding: var(--s3) 20px var(--s4) !important; }
+[data-testid="stBottom"] {
+  position: fixed !important;
+  left: 0 !important; right: 0 !important; bottom: 0 !important;
+  z-index: 100 !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+[data-testid="stBottomBlockContainer"] {
+  max-width: 760px !important;
+  margin: 0 auto !important;
+  padding: 0 16px 20px !important;
+  background: transparent !important;
+}
 [data-testid="stChatInput"] {
   border-radius: var(--radius-pill) !important;
   border: 1px solid var(--glass-border) !important;
