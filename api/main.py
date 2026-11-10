@@ -10,6 +10,7 @@ import os
 import sys
 import time
 from collections import defaultdict, deque
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 
@@ -20,16 +21,39 @@ if str(ROOT) not in sys.path:
 os.environ.setdefault("HF_HOME", "/tmp/hf")
 os.environ.setdefault("TRANSFORMERS_CACHE", "/tmp/hf")
 
-from fastapi import Depends, FastAPI, HTTPException, Request, status
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from src.config import load_config
 from src.query.pipeline import answer_question
 from src.schemes import SCHEME_BY_ID
-from src.ui.styles import inject as _inject  # noqa: F401 (kept for parity)
 
-app = FastAPI(title="HDFC MF FAQ API", version="1.0.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        config = load_config()
+        config.ensure_dirs()
+        from src.embedding import get_model
+
+        get_model(config)
+        import chromadb
+
+        client = chromadb.PersistentClient(path=str(config.chroma.persist_dir))
+        client.get_collection(config.chroma.collection)
+    except Exception:  # noqa: BLE001
+        pass
+    yield
+
+
+class UTF8JSONResponse(JSONResponse):
+    media_type = "application/json; charset=utf-8"
+
+
+app = FastAPI(title="HDFC MF FAQ API", version="1.0.0", lifespan=lifespan, default_response_class=UTF8JSONResponse)
 
 # ---------------------------------------------------------------------------
 # CORS
@@ -75,27 +99,6 @@ def rate_limit(request: Request) -> None:
     if len(bucket) >= _RATE_LIMIT:
         raise HTTPException(status_code=429, detail="Rate limit exceeded. Try again in a minute.")
     bucket.append(now)
-
-
-# ---------------------------------------------------------------------------
-# Startup: warm the model + Chroma client once
-# ---------------------------------------------------------------------------
-@app.on_event("startup")
-def _warmup() -> None:
-    try:
-        config = load_config()
-        config.ensure_dirs()
-        from src.embedding import get_model
-
-        get_model(config)
-        # open the collection once so the first request is fast
-        import chromadb
-
-        client = chromadb.PersistentClient(path=str(config.chroma.persist_dir))
-        client.get_collection(config.chroma.collection)
-    except Exception:  # noqa: BLE001
-        # Don't crash startup; the request path will surface a clean error.
-        pass
 
 
 # ---------------------------------------------------------------------------
@@ -166,6 +169,21 @@ def _last_updated_date(last_updated: str):
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return UTF8JSONResponse(status_code=422, content={"detail": exc.errors()})
+
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request, exc):
+    return UTF8JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+
+
+@app.exception_handler(Exception)
+async def generic_exception_handler(request, exc):
+    return UTF8JSONResponse(status_code=500, content={"detail": "Internal server error."})
+
+
 @app.get("/health")
 def health():
     return {"ok": True}
@@ -221,7 +239,7 @@ def ask(req: AskRequest, _auth=Depends(require_api_key), _rl=Depends(rate_limit)
     for hit in response.get("hits", []) or []:
         chunks.append({"text": hit.get("text", ""), "source": hit.get("source_url", "")})
 
-    payload: dict[str, Any] = {
+    payload = {
         "status": status,
         "answer": answer,
         "hero": hero,
