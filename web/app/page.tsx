@@ -138,7 +138,7 @@ export default function Home() {
   return (
     <div className="flex h-[100dvh] flex-col overflow-hidden">
       {/* Header */}
-      <header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-[rgba(17,17,17,0.08)] px-5">
+      <header className="flex h-16 shrink-0 items-center justify-between gap-3 px-5">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#111111] text-sm font-semibold text-white">
             F
@@ -307,7 +307,7 @@ export default function Home() {
         )}
 
         {/* Dock */}
-        <div className="shrink-0 border-t border-[rgba(17,17,17,0.08)] bg-white/80 px-5 py-3 backdrop-blur-md">
+        <div className="shrink-0 px-5 py-3 backdrop-blur-md">
           <div className="mx-auto flex max-w-[720px] flex-col gap-2">
             {!started && (
               <div className="flex flex-wrap justify-center gap-2">
