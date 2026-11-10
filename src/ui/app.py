@@ -87,7 +87,6 @@ def handle_followup(turn_index: int) -> None:
         fund = msg["fund"]
     topic = CHIP_TOPIC.get(selected, selected.lower())
     st.session_state.pending_question = f"What is the {topic} of {fund}?"
-    # reset selection so the same chip can be clicked again
     st.session_state[key] = None
 
 
@@ -221,7 +220,6 @@ def render_followups(turn_index: int) -> None:
     msg = st.session_state.messages[turn_index]
     if msg.get("role") != "assistant":
         return
-    # only last assistant turn shows chips
     last_assistant = None
     for i in range(len(st.session_state.messages) - 1, -1, -1):
         if st.session_state.messages[i].get("role") == "assistant":
@@ -296,15 +294,10 @@ if st.session_state.pending_question:
         "fund": scheme.name if scheme else None,
         "intent": response.get("intent"),
     })
-    # reset pill selections
     for k in list(st.session_state.keys()):
         if k.startswith("followup_"):
             st.session_state[k] = None
     st.rerun()
-
-# ---------- glow (always present, opacity by state) ----------
-glow_opacity = "0.10" if st.session_state.started else "0.18"
-st.markdown(f'<div class="glow" id="glow" style="opacity:{glow_opacity};"></div>', unsafe_allow_html=True)
 
 # ---------- welcome state ----------
 if not st.session_state.started and not st.session_state.messages:
@@ -315,10 +308,6 @@ if not st.session_state.started and not st.session_state.messages:
         '<p>Factual answers from official fund pages, with one citation per answer.</p></div>',
         unsafe_allow_html=True,
     )
-    st.markdown('<div class="empty-composer">', unsafe_allow_html=True)
-    with st.container():
-        prompt_empty = st.chat_input("Ask about expense ratio, exit load, SIP…", key="empty_input")
-    st.markdown('</div>', unsafe_allow_html=True)
     chip_qs = {
         "Expense ratio": "What is the expense ratio of HDFC Large Cap Fund Direct Growth?",
         "Exit load": "What is the exit load of HDFC Large Cap Fund Direct Growth?",
@@ -331,11 +320,14 @@ if not st.session_state.started and not st.session_state.messages:
         chips_html += f'<a class="chip" href="?q={q}" target="_self">{esc(label)}</a>'
     chips_html += "</div>"
     st.markdown(chips_html, unsafe_allow_html=True)
+    st.markdown('<div class="empty-composer">', unsafe_allow_html=True)
+    with st.container():
+        prompt_empty = st.chat_input("Ask about expense ratio, exit load, SIP…", key="empty_input")
+    st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
                 unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # fade sphere + glow on first keystroke
     st.markdown(
         """<script>
 (function(){
@@ -414,13 +406,18 @@ if prompt and not st.session_state.pending_question:
     })
     render_followups(len(st.session_state.messages) - 1)
 
+# glow
+glow_opacity = "0.10" if st.session_state.started else "0.18"
+st.markdown(f'<div class="glow" id="glow" style="opacity:{glow_opacity};"></div>', unsafe_allow_html=True)
+
 components.html(
     "<script>var el=window.parent.document.getElementById('thread-bottom'); if(el) el.scrollIntoView({behavior:'smooth',block:'end'});</script>",
     height=0,
 )
 
-if st.session_state.started:
+if not st.session_state.started:
     st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
                 unsafe_allow_html=True)
 else:
-    pass
+    st.markdown('<div class="composer-caption">Facts from public fund pages. Not investment advice.</div>',
+                unsafe_allow_html=True)
