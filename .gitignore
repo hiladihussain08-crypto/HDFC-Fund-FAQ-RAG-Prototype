@@ -2,7 +2,10 @@
 .venv/
 __pycache__/
 *.pyc
+*.log
 .streamlit/
+streamlit_err.txt
+streamlit_out.txt
 # chroma_db/ and artifacts/ are committed so Vercel has the index at runtime.
 # (Uncomment to ignore them again.)
 # chroma_db/
