@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 90;
+
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
 const API_KEY = process.env.API_KEY || "";
 
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest) {
   }
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 30000);
+  const timeout = setTimeout(() => controller.abort(), 70000);
 
   try {
     const res = await fetch(`${BACKEND_URL}/ask`, {
