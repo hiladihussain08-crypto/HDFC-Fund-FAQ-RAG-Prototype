@@ -16,7 +16,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: "Fund FAQ assistant",
-  description: "Factual answers about mutual funds, with one citation per answer.",
+  description: "Factual answers about selected HDFC mutual fund schemes, with one citation per answer.",
 };
 
 const themeScript = `

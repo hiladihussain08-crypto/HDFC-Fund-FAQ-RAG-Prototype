@@ -189,11 +189,11 @@ export default function Home() {
         {!started ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-2 px-5 text-center">
             <div className={`sphere ${fading ? "fade" : ""}`} />
-            <h2 className="font-outfit text-[28px] font-light leading-tight text-[var(--text)] sm:text-[22px]">
-              Ask about any mutual fund
+            <h2 className="font-outfit text-[22px] font-light leading-tight text-[var(--text)] sm:text-[28px]">
+              Ask about HDFC mutual funds
             </h2>
             <p className="text-[13px] text-[var(--text-2)]">Factual answers from official fund pages, with one citation per answer.</p>
-            <p className="text-[12px] text-[var(--text-2)]">Covers selected HDFC schemes</p>
+            <p className="text-[12px] text-[var(--text-2)]">Covers selected schemes</p>
           </div>
         ) : (
           <div className="mask-fade flex-1 overflow-y-auto px-5 py-6 scrollbar-thin">
