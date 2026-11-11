@@ -188,7 +188,7 @@ export default function Home() {
 
         {!started ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-2 px-5 text-center">
-            <div className={`sphere ${fading ? "fade" : ""}`} />
+            <div className={`sphere mb-4 sm:mb-0 ${fading ? "fade" : ""}`} />
             <h2 className="font-outfit text-[22px] font-light leading-tight text-[var(--text)] sm:text-[28px]">
               Ask about HDFC mutual funds
             </h2>

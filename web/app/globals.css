@@ -88,6 +88,13 @@ body, .surface, .card, .chip, input, button {
   box-shadow: 0 26px 64px rgba(232, 80, 14, 0.40);
   animation: float 8s ease-in-out infinite;
 }
+@media (max-width: 600px) {
+  .sphere {
+    width: clamp(88px, 14vh, 120px);
+    height: clamp(88px, 14vh, 120px);
+    box-shadow: 0 14px 36px rgba(232, 80, 14, 0.30);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .sphere { animation: none; }
 }
