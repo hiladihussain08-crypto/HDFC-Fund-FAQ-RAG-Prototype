@@ -162,6 +162,16 @@ export default function Home() {
       {/* Header */}
       <header className="flex h-16 shrink-0 items-center justify-between gap-3 px-5">
         <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--ink)] text-sm font-semibold text-[var(--on-ink)]">
+            F
+          </div>
+          <span className="text-lg font-semibold text-[var(--text)]">Fund FAQ assistant</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 text-xs text-[var(--text-2)]">
+            <Shield className="h-3.5 w-3.5" />
+            <span className="hidden min-[480px]:inline">Facts only, no advice</span>
+          </span>
           <button
             onClick={toggleTheme}
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
@@ -170,23 +180,12 @@ export default function Home() {
           >
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--ink)] text-sm font-semibold text-[var(--on-ink)]">
-            F
-          </div>
-          <span className="text-lg font-semibold text-[var(--text)]">Fund FAQ assistant</span>
         </div>
-        <span className="inline-flex items-center gap-1.5 text-xs text-[var(--text-2)]">
-          <Shield className="h-3.5 w-3.5" />
-          Facts only, no advice
-        </span>
       </header>
 
       {/* Main */}
       <main className="relative flex min-h-0 flex-1 flex-col">
-        <div
-          className={`pointer-events-none absolute bottom-0 left-1/2 z-0 h-40 w-[520px] -translate-x-1/2 ${started ? "opacity-[0.14]" : fading ? "opacity-0" : "opacity-[0.22]"}`}
-          style={{ background: "radial-gradient(ellipse at center, rgba(255,122,26,0.18), transparent 70%)", transition: "opacity 500ms" }}
-        />
+        {/* glow moved into dock */}
 
         {!started ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-2 px-5 text-center">
@@ -340,8 +339,13 @@ export default function Home() {
         )}
 
         {/* Dock */}
-        <div className="shrink-0 px-5 py-3">
-          <div className="mx-auto flex max-w-[720px] flex-col gap-2">
+        <div className="relative shrink-0 px-5 py-3">
+          <div
+            className={`pointer-events-none absolute left-1/2 top-1/2 z-0 h-[170px] w-[min(640px,100vw)] -translate-x-1/2 -translate-y-1/2 ${started ? "opacity-60" : fading ? "opacity-0" : "opacity-100"}`}
+            style={{ background: "radial-gradient(ellipse at center, rgba(255,122,26,var(--glow-alpha)), rgba(255,122,26,0) 70%)", filter: "blur(20px)", transition: "opacity 500ms" }}
+            aria-hidden
+          />
+          <div className="relative z-10 mx-auto flex max-w-[720px] flex-col gap-2">
             {!started && (
               <div className="flex flex-wrap justify-center gap-2">
                 {STARTERS.map((s) => (

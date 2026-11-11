@@ -5,6 +5,7 @@
   --surface: #ffffff;
   --border: rgba(17, 17, 17, 0.10);
   --bar-border: rgba(17, 17, 17, 0.26);
+  --glow-alpha: 0.30;
   --glass: rgba(255, 255, 255, 0.62);
   --glass-border: rgba(17, 17, 17, 0.12);
   --text: #111111;
@@ -29,6 +30,7 @@
   --surface: #121c2e;
   --border: rgba(255, 255, 255, 0.12);
   --bar-border: rgba(255, 255, 255, 0.40);
+  --glow-alpha: 0.22;
   --glass: rgba(255, 255, 255, 0.07);
   --glass-border: rgba(255, 255, 255, 0.16);
   --text: #f5f3ef;
@@ -209,6 +211,7 @@ body, .surface, .card, .chip, input, button {
   backdrop-filter: blur(12px) saturate(1.4);
   -webkit-backdrop-filter: blur(12px) saturate(1.4);
   border: 1px solid var(--bar-border);
+  box-shadow: 0 8px 28px -8px rgba(255, 122, 26, 0.35);
   display: flex;
   align-items: center;
   padding: 0 8px 0 20px;
@@ -216,6 +219,9 @@ body, .surface, .card, .chip, input, button {
   transition: border-color 150ms;
 }
 .composer:focus-within { border-color: var(--accent); }
+:root[data-theme="dark"] .composer {
+  box-shadow: 0 8px 28px -8px rgba(255, 122, 26, 0.30);
+}
 .composer input {
   flex: 1;
   background: transparent;
