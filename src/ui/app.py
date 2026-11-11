@@ -328,29 +328,7 @@ if not st.session_state.started and not st.session_state.messages:
                 unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown(
-        """<script>
-(function(){
-  function attach(){
-    const inp = document.querySelector('[data-testid="stChatInput"] textarea');
-    const sphere = document.getElementById('sphere');
-    const glow = document.getElementById('glow');
-    if(!inp) return;
-    inp.addEventListener('input', function(){
-      if(inp.value.trim().length>0){
-        if(sphere) sphere.classList.add('fading');
-        if(glow) glow.classList.add('fading');
-      } else {
-        if(sphere) sphere.classList.remove('fading');
-        if(glow) glow.classList.remove('fading');
-      }
-    });
-  }
-  setTimeout(attach, 500);
-})();
-</script>""",
-        unsafe_allow_html=True,
-    )
+    # Sphere fades only on submit (handled by started flag); no keystroke trigger.
 
     if prompt_empty:
         st.session_state.pending_prompt = prompt_empty
