@@ -70,7 +70,6 @@ export default function Home() {
   const [slow, setSlow] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const bottomRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const started = messages.length > 0;
 
@@ -361,11 +360,9 @@ export default function Home() {
             )}
             <div className="composer">
               <input
-                ref={inputRef}
                 value={input}
                 onChange={(e) => {
                   setInput(e.target.value);
-                  if (e.target.value.trim().length > 0 && !fading) setFading(true);
                 }}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask about expense ratio, exit load, SIP…"
