@@ -42,10 +42,24 @@ def test_factual_question():
     assert "1.02%" in data["answer"]
     assert data["hero"] is not None
     assert data["hero"]["value"] == "1.02%"
+    assert data["hero"]["context"] == "Base expense ratio 0.84%"
     assert data["source_url"] is not None
     assert data["last_updated"] is not None
     assert data["meta"]["query_id"]
     assert isinstance(data["meta"]["chunks"], list)
+
+
+def test_hero_context_null_for_non_expense():
+    r = client.post(
+        "/ask",
+        json={"question": "What is the minimum SIP for HDFC Large Cap Fund Direct Growth?"},
+        headers=HEADERS,
+    )
+    assert r.status_code == 200
+    data = r.json()
+    assert data["status"] == "factual"
+    assert data["hero"] is not None
+    assert data["hero"]["context"] is None
 
 
 def test_advice_question_refused():

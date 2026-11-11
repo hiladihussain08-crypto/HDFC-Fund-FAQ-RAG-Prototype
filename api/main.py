@@ -125,11 +125,18 @@ def _extract_hero(answer: str):
     if not m:
         return None, None
     hero = m.group(0).strip()
+    return hero, None
+
+
+def _base_expense_ratio_from_chunks(chunks):
     import re
 
-    pm = re.search(r"\(([^)]+)\)", answer)
-    secondary = pm.group(1).strip() if pm else None
-    return hero, secondary
+    for c in chunks or []:
+        text = c.get("text", "") if isinstance(c, dict) else str(c)
+        m = re.search(r"Base expense ratio:\s*([0-9][0-9.,]*\s*%)", text, re.IGNORECASE)
+        if m:
+            return m.group(1).strip()
+    return None
 
 
 _INTENT_LABEL = {
@@ -215,15 +222,24 @@ def ask(req: AskRequest, _auth=Depends(require_api_key), _rl=Depends(rate_limit)
     status = _map_status(route)
     answer = response.get("answer", "")
 
+    chunks = []
+    for hit in response.get("hits", []) or []:
+        chunks.append({"text": hit.get("text", ""), "source": hit.get("source_url", "")})
+
     hero = None
     if status == "factual":
-        hero_val, secondary = _extract_hero(answer)
+        hero_val, _ = _extract_hero(answer)
         if hero_val:
             intent = response.get("intent", "other")
+            context = None
+            if intent == "expense_ratio":
+                base = _base_expense_ratio_from_chunks(response.get("hits", []))
+                if base:
+                    context = f"Base expense ratio {base}"
             hero = {
                 "label": _INTENT_LABEL.get(intent, intent.replace("_", " ").title()),
                 "value": hero_val,
-                "context": secondary,
+                "context": context,
             }
 
     fund_name = None
@@ -234,10 +250,6 @@ def ask(req: AskRequest, _auth=Depends(require_api_key), _rl=Depends(rate_limit)
     intent = response.get("intent")
     if intent in (None, "", "other"):
         intent = None
-
-    chunks = []
-    for hit in response.get("hits", []) or []:
-        chunks.append({"text": hit.get("text", ""), "source": hit.get("source_url", "")})
 
     payload = {
         "status": status,

@@ -79,6 +79,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [emptyError, setEmptyError] = useState<string | null>(null);
   const [fading, setFading] = useState(false);
+  const [slow, setSlow] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -87,6 +88,15 @@ export default function Home() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    if (!loading) {
+      setSlow(false);
+      return;
+    }
+    const t = setTimeout(() => setSlow(true), 5000);
+    return () => clearTimeout(t);
+  }, [loading]);
 
   async function sendQuestion(question: string) {
     const q = question.trim();
@@ -295,9 +305,13 @@ export default function Home() {
                     F
                   </div>
                   <div className="rounded-[20px] border border-[rgba(17,17,17,0.10)] bg-white/55 p-4 backdrop-blur-md">
-                    <div className="typing flex gap-1">
-                      <span /><span /><span />
-                    </div>
+                    {slow ? (
+                      <p className="text-[13px] text-[#6b665f]">Waking up the assistant, the first answer can take up to a minute.</p>
+                    ) : (
+                      <div className="typing flex gap-1">
+                        <span /><span /><span />
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
