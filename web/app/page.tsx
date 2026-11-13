@@ -7,19 +7,20 @@ type Hero = { label: string; value: string; context: string | null };
 type Chunk = { text: string; source: string };
 type Meta = { mode: string; latency_ms: number; query_id: string; chunks: Chunk[] };
 type ApiResponse = {
-  status: "factual" | "refused" | "not_found" | "error";
+  status: "factual" | "refused" | "not_found" | "clarify" | "error";
   answer: string;
   hero: Hero | null;
   fund_name: string | null;
   intent: string | null;
   source_url: string | null;
   last_updated: string | null;
+  options?: string[] | null;
   meta: Meta;
 };
 
 type Message =
   | { id: string; role: "user"; content: string }
-  | { id: string; role: "assistant"; response: ApiResponse }
+  | { id: string; role: "assistant"; response: ApiResponse; originalQuestion?: string }
   | { id: string; role: "assistant"; error: string; retry: string };
 
 const CORE = ["Expense ratio", "Exit load", "Minimum SIP"] as const;
@@ -131,7 +132,7 @@ export default function Home() {
         const msg = (data && (data.error || data.detail)) || "Something went wrong. Please try again.";
         setMessages((m) => [...m, { id: uid(), role: "assistant", error: String(msg), retry: q }]);
       } else {
-        setMessages((m) => [...m, { id: uid(), role: "assistant", response: data as ApiResponse }]);
+        setMessages((m) => [...m, { id: uid(), role: "assistant", response: data as ApiResponse, originalQuestion: q }]);
       }
     } catch {
       setMessages((m) => [...m, { id: uid(), role: "assistant", error: "Could not reach the server. Please try again.", retry: q }]);
@@ -193,7 +194,7 @@ export default function Home() {
               Ask about HDFC mutual funds
             </h2>
             <p className="text-[13px] text-[var(--text-2)]">Factual answers from official fund pages, with one citation per answer.</p>
-            <p className="text-[12px] text-[var(--text-2)]">Covers selected schemes</p>
+            <p className="text-[12px] text-[var(--text-2)]">Covers 4 HDFC schemes</p>
           </div>
         ) : (
           <div className="mask-fade flex-1 overflow-y-auto px-5 py-6 scrollbar-thin">
@@ -233,6 +234,8 @@ export default function Home() {
                 const status =
                   r.status === "factual"
                     ? { cls: "status-factual", label: "Factual answer" }
+                    : r.status === "clarify"
+                    ? { cls: "status-notfound", label: "Which fund?" }
                     : r.status === "refused"
                     ? { cls: "status-refused", label: "I can't advise on that" }
                     : r.status === "not_found"
@@ -240,11 +243,14 @@ export default function Home() {
                     : { cls: "status-error", label: "Something went wrong" };
 
                 const isLast = i === lastAssistantIndex;
-                const chips =
-                  r.status === "factual" && r.intent
-                    ? (FOLLOWUPS[r.intent] || []).slice(0, 3)
-                    : [];
+                let chips: string[] = [];
+                if (r.status === "clarify" && Array.isArray(r.options)) {
+                  chips = r.options;
+                } else if (r.status === "factual" && r.intent) {
+                  chips = (FOLLOWUPS[r.intent] || []).slice(0, 3);
+                }
                 const fundName = r.fund_name;
+                const originalQuestion = m.originalQuestion || "";
 
                 return (
                   <div key={m.id} className="flex items-start gap-2.5 fade-in">
@@ -256,7 +262,10 @@ export default function Home() {
                         <span className="dot" /> {status.label}
                       </span>
                       <div className="card">
-                        {r.hero ? (
+                        {r.fund_name && <div className="mb-1 text-xs text-[var(--text-2)]">{r.fund_name}</div>}
+                        {r.status === "clarify" ? (
+                          <p className="text-[15px] leading-relaxed text-[var(--text)]">Which fund do you mean? Pick one and I'll look it up.</p>
+                        ) : r.hero ? (
                           <div className="flex flex-col gap-1">
                             <div className="hero-label">{r.hero.label}</div>
                             <div className="flex items-baseline gap-3">
@@ -304,7 +313,25 @@ export default function Home() {
                           {chips.map((chip) => (
                             <button
                               key={chip}
-                              onClick={() => sendQuestion(`What is the ${CHIP_TOPIC[chip].toLowerCase()} of ${fundName || "HDFC Large Cap Fund Direct Growth"}?`)}
+                              onClick={() => {
+                                const intent = r.intent || "";
+                                let q = "";
+                                if (r.status === "clarify") {
+                                  const templates: Record<string, string> = {
+                                    expense_ratio: `What is the expense ratio of ${chip}?`,
+                                    exit_load: `What is the exit load of ${chip}?`,
+                                    minimum_sip: `What is the minimum SIP of ${chip}?`,
+                                  };
+                                  if (intent && templates[intent]) {
+                                    q = templates[intent];
+                                  } else {
+                                    q = `${originalQuestion || "What is the expense ratio"} for ${chip}`.trim();
+                                  }
+                                } else {
+                                  q = `What is the ${CHIP_TOPIC[chip].toLowerCase()} of ${fundName || "HDFC Large Cap Fund Direct Growth"}?`;
+                                }
+                                sendQuestion(q);
+                              }}
                               className="chip"
                             >
                               {chip}

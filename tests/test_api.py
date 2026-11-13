@@ -85,6 +85,25 @@ def test_unknown_fund_not_found():
     assert data["status"] == "not_found"
 
 
+def test_clarify_no_fund():
+    r = client.post(
+        "/ask",
+        json={"question": "How much is the minimum sip?"},
+        headers=HEADERS,
+    )
+    assert r.status_code == 200
+    data = r.json()
+    assert data["status"] == "clarify"
+    assert data["hero"] is None
+    assert data["fund_name"] is None
+    assert data["source_url"] is None
+    assert data["last_updated"] is None
+    assert data["intent"] == "min_sip"
+    assert isinstance(data.get("options"), list)
+    assert len(data["options"]) == 4
+    assert "HDFC Large Cap Fund Direct Growth" in data["options"]
+
+
 def test_missing_api_key_401():
     r = client.post(
         "/ask",

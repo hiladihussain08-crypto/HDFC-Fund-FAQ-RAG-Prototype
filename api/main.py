@@ -29,7 +29,7 @@ from pydantic import BaseModel, Field
 
 from src.config import load_config
 from src.query.pipeline import answer_question
-from src.schemes import SCHEME_BY_ID
+from src.schemes import SCHEME_BY_ID, SCHEMES
 
 
 @asynccontextmanager
@@ -219,37 +219,52 @@ def ask(req: AskRequest, _auth=Depends(require_api_key), _rl=Depends(rate_limit)
         }
 
     route = response.get("route", "")
-    status = _map_status(route)
+    reason = response.get("reason", "")
+    if route == "miss" and reason == "missing_scheme":
+        status = "clarify"
+    else:
+        status = _map_status(route)
     answer = response.get("answer", "")
 
     chunks = []
     for hit in response.get("hits", []) or []:
         chunks.append({"text": hit.get("text", ""), "source": hit.get("source_url", "")})
 
-    hero = None
-    if status == "factual":
-        hero_val, _ = _extract_hero(answer)
-        if hero_val:
-            intent = response.get("intent", "other")
-            context = None
-            if intent == "expense_ratio":
-                base = _base_expense_ratio_from_chunks(response.get("hits", []))
-                if base:
-                    context = f"Base expense ratio {base}"
-            hero = {
-                "label": _INTENT_LABEL.get(intent, intent.replace("_", " ").title()),
-                "value": hero_val,
-                "context": context,
-            }
-
-    fund_name = None
-    scheme_id = response.get("scheme", "")
-    if scheme_id and scheme_id in SCHEME_BY_ID:
-        fund_name = SCHEME_BY_ID[scheme_id].name
-
-    intent = response.get("intent")
-    if intent in (None, "", "other"):
-        intent = None
+    if status == "clarify":
+        hero = None
+        fund_name = None
+        source_url = None
+        last_updated = None
+        intent = response.get("intent")
+        if intent in (None, "", "other"):
+            intent = None
+        options = [s.name for s in SCHEMES]
+    else:
+        hero = None
+        if status == "factual":
+            hero_val, _ = _extract_hero(answer)
+            if hero_val:
+                intent = response.get("intent", "other")
+                context = None
+                if intent == "expense_ratio":
+                    base = _base_expense_ratio_from_chunks(response.get("hits", []))
+                    if base:
+                        context = f"Base expense ratio {base}"
+                hero = {
+                    "label": _INTENT_LABEL.get(intent, intent.replace("_", " ").title()),
+                    "value": hero_val,
+                    "context": context,
+                }
+        fund_name = None
+        scheme_id = response.get("scheme", "")
+        if scheme_id and scheme_id in SCHEME_BY_ID:
+            fund_name = SCHEME_BY_ID[scheme_id].name
+        intent = response.get("intent")
+        if intent in (None, "", "other"):
+            intent = None
+        source_url = response.get("citation_url") or None
+        last_updated = _last_updated_date(response.get("last_updated", ""))
+        options = None
 
     payload = {
         "status": status,
@@ -257,8 +272,9 @@ def ask(req: AskRequest, _auth=Depends(require_api_key), _rl=Depends(rate_limit)
         "hero": hero,
         "fund_name": fund_name,
         "intent": intent,
-        "source_url": response.get("citation_url") or None,
-        "last_updated": _last_updated_date(response.get("last_updated", "")),
+        "source_url": source_url,
+        "last_updated": last_updated,
+        "options": options,
         "meta": {
             "mode": (response.get("generation") or {}).get("mode", "policy"),
             "latency_ms": response.get("latency_ms", 0),
